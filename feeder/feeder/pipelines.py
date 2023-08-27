@@ -16,8 +16,8 @@ class FeederDefaultsPipeline:
         except (KeyError, ValueError):
             published_date = updated_date
 
-        item["updated"] = updated_date.isoformat()
-        item["published"] = published_date.isoformat()
+        item["updated"] = updated_date
+        item["published"] = published_date
 
         item.setdefault("item_id", item["url"].rstrip("/"))
 

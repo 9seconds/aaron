@@ -5,6 +5,8 @@ SPIDER_MODULES = [
 ]
 NEWSPIDER_MODULE = "feeder.spiders"
 
+MAX_ITEMS = 10
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = "feeder (+http://www.yourdomain.com)"
@@ -48,9 +50,10 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-# EXTENSIONS = {
-#    "scrapy.extensions.telnet.TelnetConsole": None,
-# }
+EXTENSIONS = {
+    "scrapy.extensions.closespider.CloseSpider": 100,
+}
+CLOSESPIDER_ITEMCOUNT = 2 * MAX_ITEMS
 
 ITEM_PIPELINES = {
     "feeder.pipelines.FeederDefaultsPipeline": 100,

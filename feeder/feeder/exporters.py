@@ -1,5 +1,8 @@
+import heapq
+
 import lxml.etree
 import scrapy.exporters
+import scrapy.utils.project
 
 
 def set_el(root, name, text=None, attrib=None):
@@ -24,7 +27,8 @@ class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
             "feed", nsmap={None: "http://www.w3.org/2005/Atom"}
         )
         self.header_set = False
-        self.items = {}
+        self.items = []
+        self.settings = scrapy.utils.project.get_project_settings()
 
     def export_metadata(self, metadata):
         set_el(self.document, "title", metadata["title"])
@@ -43,15 +47,17 @@ class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
             self.export_metadata(item["metadata"])
             self.header_set = True
 
+        self.add_item(item)
+
+    def add_item(self, item):
         el = lxml.etree.Element("entry")
-        self.items[(item["updated"], item["item_id"])] = el
 
         set_el(el, "id", item["item_id"])
         set_el(el, "title", item["title"])
         set_el(el, "link", None, {"href": item["url"]})
         set_el(el, "content", item["content"], {"type": "html"})
-        set_el(el, "updated", item["updated"])
-        set_el(el, "published", item["published"])
+        set_el(el, "updated", item["updated"].isoformat())
+        set_el(el, "published", item["published"].isoformat())
         set_el_if(el, "summary", item["summary"])
 
         if (
@@ -64,14 +70,21 @@ class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
             set_el_if(author, "email", item.get("author_email"))
             set_el_if(author, "uri", item.get("author_url"))
 
+        heap_el = (item["updated"], item["item_id"], el)
+
+        if len(self.items) < self.settings.getint("MAX_ITEMS"):
+            heapq.heappush(self.items, heap_el)
+        elif item["updated"] > self.items[0][0]:
+            heapq.heapreplace(self.items, heap_el)
+
     def finish_exporting(self):
         if not self.items:
             return
 
-        items = sorted(self.items.items(), reverse=True)
-        set_el(self.document, "updated", items[0][0][0])
+        items = sorted(self.items, reverse=True)
+        set_el(self.document, "updated", items[0][0].isoformat())
 
-        for _, v in items:
+        for _, _, v in items:
             self.document.append(v)
 
         self.file.write(b'<?xml version="1.0" encoding="utf-8"?>\n')

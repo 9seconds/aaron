@@ -22,8 +22,8 @@ class FeedEntry(scrapy.Item):
             w3lib.html.strip_html5_whitespace
         )
     )
-    updated = scrapy.Field()
-    published = scrapy.Field()
+    updated = scrapy.Field(serializer=lambda x: x.isoformat())
+    published = scrapy.Field(serializer=lambda x: x.isoformat())
 
     author_name = scrapy.Field()
     author_email = scrapy.Field()
