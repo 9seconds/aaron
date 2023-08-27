@@ -9,6 +9,10 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 scrapy = "^2.10.0"
+itemloaders = "^1.1.0"
+w3lib = "^2.1.2"
+dateparser = "^1.1.8"
+lxml = "^4.9.3"
 
 
 [build-system]
