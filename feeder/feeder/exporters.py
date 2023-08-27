@@ -14,7 +14,6 @@ def set_el_if(root, name, text=None, attrib=None):
 
 
 class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
-
     def __init__(self, file, *args, **kwargs):
         kwargs["export_empty_fields"] = False
 
@@ -22,8 +21,7 @@ class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
 
         self.file = file
         self.document = lxml.etree.Element(
-            "feed",
-            nsmap={None: "http://www.w3.org/2005/Atom"}
+            "feed", nsmap={None: "http://www.w3.org/2005/Atom"}
         )
         self.header_set = False
         self.items = {}
@@ -56,8 +54,11 @@ class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
         set_el(el, "published", item["published"])
         set_el_if(el, "summary", item["summary"])
 
-        if item.get("author_name") or item.get("author_email") \
-                or item.get("author_url"):
+        if (
+            item.get("author_name")
+            or item.get("author_email")
+            or item.get("author_url")
+        ):
             author = lxml.etree.SubElement(el, "author")
             set_el_if(author, "name", item.get("author_name"))
             set_el_if(author, "email", item.get("author_email"))
@@ -76,8 +77,6 @@ class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
         self.file.write(b'<?xml version="1.0" encoding="utf-8"?>\n')
         self.file.write(
             lxml.etree.tostring(
-                self.document,
-                encoding="utf-8",
-                pretty_print=True
+                self.document, encoding="utf-8", pretty_print=True
             )
         )

@@ -5,7 +5,6 @@ import scrapy.linkextractors
 import feeder.items
 
 
-
 class XkcdSpider(scrapy.spiders.CrawlSpider):
     name = "xkcd"
     allowed_domains = ["xkcd.com"]
@@ -27,7 +26,7 @@ class XkcdSpider(scrapy.spiders.CrawlSpider):
                     "//ul[@class = 'comicNav'][1]//a[@rel = 'prev']"
                 )
             ),
-            callback='parse_item',
+            callback="parse_item",
             follow=True,
         )
     ]
@@ -38,25 +37,22 @@ class XkcdSpider(scrapy.spiders.CrawlSpider):
         comic = response.xpath("//div[@id='comic']/img[1]")
 
         img_url = html.escape(
-            response.urljoin(
-                comic.xpath("@src").extract_first()
-            )
+            response.urljoin(comic.xpath("@src").extract_first())
         ).replace(".png", "_2x.png")
-        title = html.escape(comic.xpath("@title").extract_first() or '')
+        title = html.escape(comic.xpath("@title").extract_first() or "")
 
         loader.add_value("url", [response.url])
         loader.add_xpath("title", "//div[@id='ctitle']")
         loader.add_xpath("summary", "//div[@id='comic']/img[1]/@title")
         loader.add_value(
-            "content",
-            [f"<div><img src='{img_url}' /><p>{title}</p></div>"]
+            "content", [f"<div><img src='{img_url}' /><p>{title}</p></div>"]
         )
 
         if img_url:
             return response.follow(
                 img_url,
                 self.parse_img_date,
-                cb_kwargs={"item": loader.load_item()}
+                cb_kwargs={"item": loader.load_item()},
             )
 
     def parse_img_date(self, response, item):

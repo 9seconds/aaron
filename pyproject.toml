@@ -14,6 +14,12 @@ w3lib = "^2.1.2"
 dateparser = "^1.1.8"
 lxml = "^4.9.3"
 
+[tool.black]
+line-length = 80
+target-version = ["py311"]
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
 
 [build-system]
 requires = ["poetry-core"]

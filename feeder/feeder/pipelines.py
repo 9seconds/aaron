@@ -25,7 +25,6 @@ class FeederDefaultsPipeline:
 
 
 class FeederFilterPipeline:
-
     def __init__(self):
         self.seen_ids = set()
 
@@ -45,7 +44,6 @@ class FeederFilterPipeline:
 
 
 class FeederMetadataPipeline:
-
     def process_item(self, item, spider):
         item["metadata"] = {
             "id": spider.settings["FEED_ID"],
@@ -53,6 +51,6 @@ class FeederMetadataPipeline:
             "author_name": spider.settings["FEED_AUTHOR_NAME"],
             "author_email": spider.settings["FEED_AUTHOR_EMAIL"],
             "favicon": spider.settings.get("FEED_FAVICON"),
-            "logo": spider.settings.get("FEED_LOGO")
+            "logo": spider.settings.get("FEED_LOGO"),
         }
         return item

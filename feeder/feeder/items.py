@@ -11,8 +11,7 @@ class FeedEntry(scrapy.Item):
     item_id = scrapy.Field()
     url = scrapy.Field(
         input_processor=itemloaders.processors.MapCompose(
-            w3lib.url.canonicalize_url,
-            w3lib.html.strip_html5_whitespace
+            w3lib.url.canonicalize_url, w3lib.html.strip_html5_whitespace
         )
     )
 
@@ -37,5 +36,5 @@ class FeedEntryLoader(scrapy.loader.ItemLoader):
     default_input_processor = itemloaders.processors.MapCompose(
         w3lib.html.remove_tags,
         w3lib.html.replace_entities,
-        w3lib.html.strip_html5_whitespace
+        w3lib.html.strip_html5_whitespace,
     )
