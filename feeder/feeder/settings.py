@@ -20,11 +20,7 @@ MEMUSAGE_LIMIT_MB = 4 * MEMUSAGE_WARNING_MB
 TELNETCONSOLE_ENABLED = False
 
 HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = (
-    60 *  # minute
-    60 *  # hour
-    24    # day
-)
+HTTPCACHE_EXPIRATION_SECS = 60 * 60 * 24  # minute  # hour  # day
 HTTPCACHE_GZIP = True
 HTTPCACHE_DIR = os.getenv("FEEDER_HTTPCACHE_DIR", "httpcache")
 HTTPCACHE_POLICY = "scrapy.extensions.httpcache.RFC2616Policy"
@@ -58,3 +54,17 @@ FEED_EXPORT_ENCODING = "utf-8"
 FEED_EXPORTERS = {
     "atom": "feeder.exporters.FeederAtomExporter",
 }
+
+DOWNLOADER_MIDDLEWARES = {
+    "scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware": None,
+    "scrapy.contrib.downloadermiddleware.retry.RetryMiddleware": None,
+    "scrapy_fake_useragent.middleware.RandomUserAgentMiddleware": 400,
+    "scrapy_fake_useragent.middleware.RetryUserAgentMiddleware": 401,
+}
+
+FAKEUSERAGENT_PROVIDERS = [
+    "scrapy_fake_useragent.providers.FakeUserAgentProvider",
+    "scrapy_fake_useragent.providers.FakerProvider",
+    "scrapy_fake_useragent.providers.FixedUserAgentProvider",
+]
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/116.0"
