@@ -58,7 +58,7 @@ class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
         set_el(el, "content", item["content"], {"type": "html"})
         set_el(el, "updated", item["updated"].isoformat())
         set_el(el, "published", item["published"].isoformat())
-        set_el_if(el, "summary", item["summary"])
+        set_el_if(el, "summary", item.get("summary"))
 
         if (
             item.get("author_name")
