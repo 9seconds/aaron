@@ -7,7 +7,7 @@ SPIDER_MODULES = [
 ]
 NEWSPIDER_MODULE = "feeder.spiders"
 
-MAX_ITEMS = 10
+MAX_ITEMS = 20
 
 DEFAULT_ITEM_CLASS = "feeder.items.FeedEntry"
 DEPTH_PRIORITY = -0.5

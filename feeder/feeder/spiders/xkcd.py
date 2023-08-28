@@ -17,6 +17,8 @@ class XkcdSpider(scrapy.spiders.CrawlSpider):
         "FEED_AUTHOR_EMAIL": "contact@xkcd.com",
         "FEED_FAVICON": "https://xkcd.com/s/919f27.ico",
         "FEED_LOGO": "https://xkcd.com/s/0b7742.png",
+
+        "AUTOTHROTTLE_ENABLED": False,
     }
 
     rules = [
