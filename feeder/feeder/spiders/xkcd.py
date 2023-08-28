@@ -1,7 +1,9 @@
 import html
 
+import dateparser
 import scrapy.spiders
 import scrapy.linkextractors
+
 import feeder.items
 
 
@@ -53,9 +55,10 @@ class XkcdSpider(scrapy.spiders.CrawlSpider):
             return response.follow(
                 img_url,
                 self.parse_img_date,
-                cb_kwargs={"item": loader.load_item()},
+                cb_kwargs={"loader": loader},
             )
 
-    def parse_img_date(self, response, item):
-        item["updated"] = response.headers["Last-Modified"].decode()
-        return item
+    def parse_img_date(self, response, loader):
+        loader.add_value("updated", response.headers["Last-Modified"].decode())
+
+        return loader.load_item()

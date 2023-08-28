@@ -1,25 +1,16 @@
 import scrapy.exceptions
-import dateparser
 
 
 class FeederDefaultsPipeline:
     def process_item(self, item, spider):
-        try:
-            updated_date = dateparser.parse(item["updated"])
-        except ValueError as exc:
-            raise scrapy.exceptions.DropItem(
-                "Incorrect updated field value"
-            ) from exc
-
-        try:
-            published_date = dateparser.parse(item["published"])
-        except (KeyError, ValueError):
-            published_date = updated_date
-
-        item["updated"] = updated_date
-        item["published"] = published_date
-
+        item.setdefault("published", item["updated"])
         item.setdefault("item_id", item["url"].rstrip("/"))
+
+        if item["published"] > item["updated"]:
+            raise scrapy.exceptions.DropItem(
+                f"Published {item['published']} is later than "
+                f"updated {item['updated']}"
+            )
 
         return item
 

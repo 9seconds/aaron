@@ -7,3 +7,4 @@ mkdir -p "$OUTPUT_DIR" || true
 cd ./feeder
 
 poetry run scrapy crawl -O "$OUTPUT_DIR/xkcd.xml:atom" xkcd
+poetry run scrapy crawl -O "$OUTPUT_DIR/cynicmansion.xml:atom" cynicmansion
