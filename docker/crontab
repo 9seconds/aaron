@@ -1,3 +1,4 @@
 PATH=/usr/local/bin:/usr/bin:/bin
 
-* 0 */6 * * *     /usr/local/bin/collect
+* 0 */6 * * *     collect
+0 0 *   * * *     find /var/log/crawl -name '*.log' -type f -mtime +7 -delete
