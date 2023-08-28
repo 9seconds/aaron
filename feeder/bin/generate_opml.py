@@ -30,12 +30,16 @@ def main():
 
     for name in sorted(process.spider_loader.list()):
         crawler = process.create_crawler(name)
-        outline = lxml.etree.SubElement(body, "outline", {
-            "type": "rss",
-            "xmlUrl": urllib.parse.urljoin(options.url, f"{name}.xml"),
-            "htmlUrl": crawler.settings.get("FEED_ID"),
-            "text": crawler.settings.get("FEED_TITLE")
-        })
+        outline = lxml.etree.SubElement(
+            body,
+            "outline",
+            {
+                "type": "rss",
+                "xmlUrl": urllib.parse.urljoin(options.url, f"{name}.xml"),
+                "htmlUrl": crawler.settings.get("FEED_ID"),
+                "text": crawler.settings.get("FEED_TITLE"),
+            },
+        )
 
     print('<?xml version="1.0" encoding="utf-8" ?>')
     print(lxml.etree.tostring(root, pretty_print=True).decode())
@@ -44,9 +48,7 @@ def main():
 def get_options():
     parser = argparse.ArgumentParser(description="Generate OPML")
 
-    parser.add_argument(
-        "url",
-        help="Base URL")
+    parser.add_argument("url", help="Base URL")
 
     return parser.parse_args()
 
