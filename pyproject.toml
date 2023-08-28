@@ -26,6 +26,7 @@ flake8-bugbear = "^23.7.10"
 flake8-simplify = "^0.20.0"
 flake8-2020 = "^1.8.1"
 flake8-secure-coding-standard = "^1.4.0"
+flake8-string-format = "^0.3.0"
 
 [build-system]
 requires = ["poetry-core"]
