@@ -465,6 +465,23 @@ flake8 = ">=6.0.0"
 dev = ["coverage", "hypothesis", "hypothesmith (>=0.2)", "pre-commit", "pytest", "tox"]
 
 [[package]]
+name = "flake8-secure-coding-standard"
+version = "1.4.0"
+description = "Flake8 plugin adding some checks to make Python code adhere to more secure coding standard"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "flake8-secure-coding-standard-1.4.0.tar.gz", hash = "sha256:a0393cd3ed5bd44a79735e15d1845e9416cda5b3fe39941984e2d9714916d779"},
+    {file = "flake8_secure_coding_standard-1.4.0-py2.py3-none-any.whl", hash = "sha256:0c7222b8c92f85dc38014a53d6a1a8dab4267363b128afe480cbc2d1c29b2df0"},
+]
+
+[package.dependencies]
+flake8 = ">=3.7,<7.0"
+
+[package.extras]
+test = ["mock", "pytest", "pytest-cov", "pytest-mock"]
+
+[[package]]
 name = "flake8-simplify"
 version = "0.20.0"
 description = "flake8 plugin which checks for code that can be simplified"
@@ -1319,4 +1336,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b9599e3fc0a94b1f62d277a3e8e46f7762e1cc295b829924c12984996fe19581"
+content-hash = "a0a8f20e26bb228db7bab12b34d1b548bd5558469f71ea3d75ddb7f5f6419606"
