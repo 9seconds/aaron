@@ -5,6 +5,12 @@ description = "Make RSS great again"
 authors = ["9seconds <nineseconds@yandex.ru>"]
 license = "MIT"
 readme = "README.md"
+packages = [
+  { include = "feeder" }
+]
+
+[tool.poetry.scripts]
+crawl = "feeder.bin.crawl:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"

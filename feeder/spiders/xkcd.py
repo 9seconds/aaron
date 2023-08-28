@@ -1,6 +1,5 @@
 import html
 
-import dateparser
 import scrapy.spiders
 import scrapy.linkextractors
 
