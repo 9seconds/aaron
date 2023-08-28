@@ -14,6 +14,7 @@ w3lib = "^2.1.2"
 dateparser = "^1.1.8"
 lxml = "^4.9.3"
 scrapy-fake-useragent = "^1.4.4"
+flake8-useless-assert = "^0.4.4"
 
 [tool.black]
 line-length = 80

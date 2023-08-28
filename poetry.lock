@@ -511,6 +511,20 @@ files = [
 flake8 = "*"
 
 [[package]]
+name = "flake8-useless-assert"
+version = "0.4.4"
+description = "flake8 plugin to catch useless `assert` statements"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "flake8-useless-assert-0.4.4.tar.gz", hash = "sha256:336bcc5e558fee11593b4294ccda46777eb873cb4445e51a0edeecf9d8517b42"},
+    {file = "flake8_useless_assert-0.4.4-py3-none-any.whl", hash = "sha256:3f1c0c579eaaf008721bc0d0db2e3391355a8dacd06b5ac63c1bab0c9e29e51f"},
+]
+
+[package.dependencies]
+flake8 = ">=3.9"
+
+[[package]]
 name = "hyperlink"
 version = "21.0.0"
 description = "A featureful, immutable, and correct URL for Python."
@@ -1350,4 +1364,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "360ce3643c5b262ebabaf783bf96fcd0d568c41bdaeaa67c94bc689ff247a9f1"
+content-hash = "17cb34079ee8215fbda12153754aff4e031325e71a16f8ece9dd3678826aa3b2"
