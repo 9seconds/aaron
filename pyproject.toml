@@ -23,6 +23,7 @@ target-version = ["py311"]
 black = "^23.7.0"
 flake8 = "^6.1.0"
 flake8-bugbear = "^23.7.10"
+flake8-simplify = "^0.20.0"
 
 [build-system]
 requires = ["poetry-core"]
