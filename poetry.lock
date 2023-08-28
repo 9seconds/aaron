@@ -433,6 +433,20 @@ pycodestyle = ">=2.11.0,<2.12.0"
 pyflakes = ">=3.1.0,<3.2.0"
 
 [[package]]
+name = "flake8-2020"
+version = "1.8.1"
+description = "flake8 plugin which checks for misuse of `sys.version` or `sys.version_info`"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "flake8_2020-1.8.1-py2.py3-none-any.whl", hash = "sha256:59b6b8ac01cde10ef11b31a2c9aa15b4509d828ae115ee5be34464b9e4de4ea6"},
+    {file = "flake8_2020-1.8.1.tar.gz", hash = "sha256:094ea95e8b614c3bd123fd4f007be28ec117ca57a6169903d4baaabe78e3e590"},
+]
+
+[package.dependencies]
+flake8 = ">=5"
+
+[[package]]
 name = "flake8-bugbear"
 version = "23.7.10"
 description = "A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle."
@@ -1305,4 +1319,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "89e17d388c1d292b47003c1ca801ffa55e54c16fc1edefb5796a6d07ba6294af"
+content-hash = "b9599e3fc0a94b1f62d277a3e8e46f7762e1cc295b829924c12984996fe19581"
