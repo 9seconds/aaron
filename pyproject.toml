@@ -11,6 +11,7 @@ packages = [
 
 [tool.poetry.scripts]
 crawl = "feeder.bin.crawl:main"
+generate_opml = "feeder.bin.generate_opml:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
