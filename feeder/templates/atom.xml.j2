@@ -1,0 +1,63 @@
+{%- set metadata = (items | first).metadata -%}
+
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>{{ metadata.id }}</id>
+  <title>{{ metadata.title }}</title>
+  <link rel="alternate" href="{{ metadata.id }}" />
+
+  {% if metadata.favicon %}
+    <icon>{{ metadata.favicon }}</icon>
+  {% endif %}
+
+  {% if metadata.logo %}
+    <logo>{{ metadata.logo }}</logo>
+  {% endif %}
+
+  {% if metadata.author_name %}
+    <rights>© {{ metadata.author_name}} ({{ metadata.id }})</rights>
+  {% endif %}
+
+  {% if metadata.author_name or metadata.author_email %}
+    <author>
+      <uri>{{ metadata.id }}</uri>
+      {% if metadata.author_name %}
+        <name>{{ metadata.author_name }}</name>
+      {% endif %}
+      {% if metadata.author_email %}
+        <email>{{ metadata.author_author_email }}</email>
+      {% endif %}
+    </author>
+  {% endif %}
+
+  <updated>{{ (items | first).updated.isoformat() }}</updated>
+
+  {% for item in items %}
+    <entry>
+      <id>{{ item.item_id }}</id>
+      <title>{{ item.title }}</title>
+      <link href="{{ item.url }}" />
+      <updated>{{ item.updated.isoformat() }}</updated>
+      <published>{{ item.published.isoformat() }}</published>
+      <content type="html">{{ item.content }}</content>
+
+      {% if item.summary %}
+        <summary>{{ item.summary }}</summary>
+      {% endif %}
+
+      {% if item.author_name or item.author_email or item.author_url %}
+        <author>
+          {% if item.author_name %}
+            <name>{{ item.author_name }}</name>
+          {% endif %}
+          {% if item.author_email %}
+            <email>{{ item.author_email }}</email>
+          {% endif %}
+          {% if item.author_url %}
+            <uri>{{ item.author_url }}</uri>
+          {% endif %}
+        </author>
+      {% endif %}
+    </entry>
+  {% endfor %}
+</feed>

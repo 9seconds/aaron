@@ -2,8 +2,17 @@ import dateparser
 import itemloaders.processors
 import scrapy
 import scrapy.loader
+import tzlocal
 import w3lib.html
 import w3lib.url
+
+
+def parse_timestamp(value):
+    tstamp = dateparser.parse(value)
+    if not tstamp.tzinfo:
+        tstamp = tstamp.astimezone(tzlocal.get_localzone())
+
+    return tstamp
 
 
 class FeedEntry(scrapy.Item):
@@ -28,7 +37,7 @@ class FeedEntry(scrapy.Item):
             w3lib.html.remove_tags,
             w3lib.html.replace_entities,
             w3lib.html.strip_html5_whitespace,
-            dateparser.parse,
+            parse_timestamp,
         ),
         serializer=lambda x: x.isoformat(),
     )
@@ -37,7 +46,7 @@ class FeedEntry(scrapy.Item):
             w3lib.html.remove_tags,
             w3lib.html.replace_entities,
             w3lib.html.strip_html5_whitespace,
-            dateparser.parse,
+            parse_timestamp,
         ),
         serializer=lambda x: x.isoformat(),
     )

@@ -1,7 +1,7 @@
-import lxml.etree
 import scrapy
 import w3lib.html
 
+import feeder
 import feeder.items
 
 
@@ -59,15 +59,20 @@ class CynicmansionSpider(scrapy.Spider):
         if url:
             loader.add_value("url", response.urljoin(url))
 
-        body = lxml.etree.Element("div")
-        for img in root.xpath(".//div[@class='comics_image']/img"):
-            div_element = lxml.etree.SubElement(body, "div")
-            lxml.etree.SubElement(
-                div_element,
-                "img",
-                {"src": response.urljoin(img.xpath("@src").extract_first())},
-            )
+        images = [
+            response.urljoin(img)
+            for img in root.xpath(
+                ".//div[@class='comics_image']/img/@src"
+            ).extract()
+        ]
+        if not images:
+            return
 
-        loader.add_value("content", lxml.etree.tostring(body).decode())
+        loader.add_value(
+            "content",
+            feeder.render_template(
+                self, images=images, title=loader.get_output_value("title")
+            ),
+        )
 
         return loader.load_item()
