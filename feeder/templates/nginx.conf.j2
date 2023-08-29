@@ -18,6 +18,14 @@ http {
 
   gzip_types application/xml application/atom+xml;
 
+  map $sent_http_content_type $expires {
+    default              off;
+    application/xml      1d;
+    application/atom+xml 2h;
+  }
+
+  server_tokens off;
+
   server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -28,6 +36,8 @@ http {
     location /{{ password | safe }}/ {
       alias /feeds/;
       index index.opml;
+
+      expires $expires;
 
       types {
         application/atom+xml xml;
