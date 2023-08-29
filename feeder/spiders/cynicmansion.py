@@ -46,6 +46,11 @@ class CynicmansionSpider(scrapy.Spider):
     def parse_item(self, root, response):
         loader = feeder.items.FeedEntryLoader(selector=root)
 
+        url = root.xpath(".//table[1]//a[1]/@href").extract_first()
+        if not url:
+            return
+
+        loader.add_value("url", response.urljoin(url))
         loader.add_xpath("title", ".//p[@class='comics_name']")
         loader.add_value(
             "updated",
@@ -54,10 +59,6 @@ class CynicmansionSpider(scrapy.Spider):
                 which_ones=("b",),
             ),
         )
-
-        url = root.xpath(".//table[1]//a[1]/@href").extract_first()
-        if url:
-            loader.add_value("url", response.urljoin(url))
 
         images = [
             response.urljoin(img)

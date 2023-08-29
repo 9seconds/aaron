@@ -1,20 +1,8 @@
 import heapq
-import urllib.parse
 
 import feeder
 import scrapy.exporters
 import scrapy.utils.project
-
-
-def set_el(root, name, text=None, attrib=None):
-    sub = lxml.etree.SubElement(root, name, attrib)
-    if text:
-        sub.text = text
-
-
-def set_el_if(root, name, text=None, attrib=None):
-    if text:
-        set_el(root, name, text, attrib)
 
 
 class FeederAtomExporter(scrapy.exporters.BaseItemExporter):

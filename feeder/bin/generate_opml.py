@@ -2,7 +2,6 @@
 
 import argparse
 import os
-import pathlib
 import urllib.parse
 
 import lxml.etree

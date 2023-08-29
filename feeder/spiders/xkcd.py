@@ -1,8 +1,7 @@
-import html
-
 import scrapy.spiders
 import scrapy.linkextractors
 
+import feeder
 import feeder.items
 
 
@@ -38,24 +37,28 @@ class XkcdSpider(scrapy.spiders.CrawlSpider):
 
         comic = response.xpath("//div[@id='comic']/img[1]")
 
-        img_url = html.escape(
-            response.urljoin(comic.xpath("@src").extract_first())
-        ).replace(".png", "_2x.png")
-        title = html.escape(comic.xpath("@title").extract_first() or "")
+        img_url = response.urljoin(comic.xpath("@src").extract_first())
+        if not img_url:
+            return
 
-        loader.add_value("url", [response.url])
+        loader.add_value("url", response.url)
         loader.add_xpath("title", "//div[@id='ctitle']")
         loader.add_xpath("summary", "//div[@id='comic']/img[1]/@title")
+
         loader.add_value(
-            "content", [f"<div><img src='{img_url}' /><p>{title}</p></div>"]
+            "content",
+            feeder.render_template(
+                self,
+                url=img_url,
+                title=comic.xpath("@title").extract_first() or "",
+            ),
         )
 
-        if img_url:
-            return response.follow(
-                img_url,
-                self.parse_img_date,
-                cb_kwargs={"loader": loader},
-            )
+        return response.follow(
+            img_url,
+            self.parse_img_date,
+            cb_kwargs={"loader": loader},
+        )
 
     def parse_img_date(self, response, loader):
         loader.add_value("updated", response.headers["Last-Modified"].decode())
