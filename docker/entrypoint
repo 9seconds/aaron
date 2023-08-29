@@ -1,4 +1,10 @@
 #!/bin/bash
 
-collect
+if [[ ! -v BASE_URL ]]; then
+  echo "Base URL is not defined" 1>&2
+  exit 1
+fi
+
+generate_nginx "${PASSWORD:-}" > /etc/nginx/nginx.conf
+[[ ! -f /feeds/index.opml ]] && collect
 exec runsvdir /runit

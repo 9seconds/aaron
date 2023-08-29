@@ -19,3 +19,7 @@ def render_feed(items):
 
 def render_opml(items):
     return JinjaEnvironment.get_template("opml.xml.j2").render(items=items)
+
+
+def render_nginx(password):
+    return JinjaEnvironment.get_template("nginx.conf.j2").render(password=password)

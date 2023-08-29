@@ -21,9 +21,12 @@ http {
   server {
     listen 80 default_server;
     listen [::]:80 default_server;
+    server_name _;
 
-    location / {
-      root /feeds;
+    root /_;
+
+    location /{{ password | safe }}/ {
+      alias /feeds/;
       index index.opml;
 
       types {
