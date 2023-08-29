@@ -4,9 +4,10 @@ import argparse
 import os
 import urllib.parse
 
-import lxml.etree
 import scrapy.crawler
 import scrapy.utils.project
+
+import feeder
 
 
 def main():
@@ -19,29 +20,16 @@ def main():
 
     process = scrapy.crawler.CrawlerProcess(settings)
 
-    root = lxml.etree.Element("opml", {"version": "2.0"})
-
-    head = lxml.etree.SubElement(root, "head")
-    lxml.etree.SubElement(head, "title").text = "Feeder feeds"
-    lxml.etree.SubElement(head, "docs").text = "http://opml.org/spec2.opml"
-
-    body = lxml.etree.SubElement(root, "body")
-
-    for name in sorted(process.spider_loader.list()):
+    items = []
+    for name in process.spider_loader.list():
         crawler = process.create_crawler(name)
-        outline = lxml.etree.SubElement(
-            body,
-            "outline",
-            {
-                "type": "rss",
-                "xmlUrl": urllib.parse.urljoin(options.url, f"{name}.xml"),
-                "htmlUrl": crawler.settings.get("FEED_ID"),
-                "text": crawler.settings.get("FEED_TITLE"),
-            },
-        )
+        items.append({
+            "feed_url": urllib.parse.urljoin(options.url, f"{name}.xml"),
+            "html_url": crawler.settings.get("FEED_ID"),
+            "title": crawler.settings.get("FEED_TITLE")
+        })
 
-    print('<?xml version="1.0" encoding="utf-8" ?>')
-    print(lxml.etree.tostring(root, pretty_print=True).decode())
+    print(feeder.render_opml(items))
 
 
 def get_options():

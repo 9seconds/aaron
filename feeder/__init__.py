@@ -15,3 +15,7 @@ def render_template(spider, **ctx):
 
 def render_feed(items):
     return JinjaEnvironment.get_template("atom.xml.j2").render(items=items)
+
+
+def render_opml(items):
+    return JinjaEnvironment.get_template("opml.xml.j2").render(items=items)
