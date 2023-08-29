@@ -1,0 +1,10 @@
+#!/bin/bash
+
+OUT="$(mktemp -d)"
+trap 'rm -rf -- "$OUT"' EXIT
+
+crawl "$OUT" 2>&1 | tee -a "/var/log/feeder/crawl-$(date -u +%F).log"
+generate_opml "${BASE_URL?Base url was not set}" > "$OUT/index.opml"
+zopfli --i1000 $OUT/*
+rm -rf /feeds/*
+mv $OUT/* /feeds/

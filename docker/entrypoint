@@ -1,0 +1,4 @@
+#!/bin/bash
+
+collect
+exec runsvdir /runit

@@ -1,4 +1,3 @@
-PATH=/usr/local/bin:/usr/bin:/bin
-
-* 0 */6 * * *     collect
-0 0 *   * * *     find /var/log/crawl -name '*.log' -type f -mtime +7 -delete
+PATH=/usr/local/bin:/usr/bin:/bin:/app/bin
+10 */2 * * *     collect
+0  4   * * *     find /var/log/feeder -name '*.log' -type f -mtime +7 -delete
