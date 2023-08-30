@@ -8,7 +8,7 @@ http {
   include /etc/nginx/mime.types;
 
   default_type  application/octet-stream;
-  access_log off;
+  access_log /dev/stdout;
   error_log /dev/stderr;
 
   gzip on;
@@ -26,10 +26,14 @@ http {
 
   server_tokens off;
 
+  limit_req_zone $binary_remote_addr zone=ratelimit:256k rate=10r/s;
+
   server {
     listen 80 default_server;
     listen [::]:80 default_server;
     server_name _;
+
+    limit_req zone=ratelimit burst=10;
 
     index index.opml;
     expires $expires;
