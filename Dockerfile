@@ -37,6 +37,15 @@ RUN poetry bundle venv \
 
 FROM python:3-slim AS app
 
+HEALTHCHECK \
+  --start-period=1m \
+  CMD info health
+
+ENV PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/app/bin
+ENV PASSWORD ""
+
+EXPOSE 80
+
 RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       --no-install-recommends \
@@ -52,16 +61,13 @@ RUN apt-get update \
 COPY ./docker/crontab /crontab
 RUN crontab /crontab && rm /crontab
 
+ENV LD_PRELOAD=/usr/lib/runit-docker/runit-docker.so
+
 COPY ./docker/collect /usr/local/bin/collect
 COPY ./docker/entrypoint /usr/local/bin/entrypoint
 COPY ./docker/runit /runit
-COPY --from=build /runit-docker.so /usr/lib/runit-docker/runit-docker.so
+
 COPY --from=build /app /app
-
-ENV LD_PRELOAD=/usr/lib/runit-docker/runit-docker.so
-ENV PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/app/bin
-
-EXPOSE 80
-ENV PASSWORD ""
+COPY --from=build /runit-docker.so /usr/lib/runit-docker/runit-docker.so
 
 CMD ["entrypoint"]
