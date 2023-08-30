@@ -22,4 +22,6 @@ def render_opml(items):
 
 
 def render_nginx(password):
-    return JinjaEnvironment.get_template("nginx.conf.j2").render(password=password)
+    return JinjaEnvironment.get_template("nginx.conf.j2").render(
+        password=password
+    )
