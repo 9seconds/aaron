@@ -5,6 +5,6 @@ if [[ ! -v BASE_URL ]]; then
   exit 1
 fi
 
-generate_nginx "${PASSWORD:-}" > /etc/nginx/nginx.conf
+generate_nginx "$PASSWORD" > /etc/nginx/nginx.conf
 [[ ! -f /feeds/index.opml ]] && collect
 exec runsvdir /runit

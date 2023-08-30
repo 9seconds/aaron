@@ -8,7 +8,7 @@ fi
 OUT="$(mktemp -d)"
 trap 'rm -rf -- "$OUT"' EXIT
 
-generate_opml "${BASE_URL}" "${PASSWORD:-}" > "$OUT/index.opml"
+generate_opml "${BASE_URL}" "$PASSWORD" > "$OUT/index.opml"
 crawl "$OUT" 2>&1 | tee -a "/var/log/feeder/crawl-$(date -u +%F).log"
 zopfli --i1000 $OUT/*
 rm -rf /feeds/*

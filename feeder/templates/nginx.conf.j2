@@ -31,19 +31,24 @@ http {
     listen [::]:80 default_server;
     server_name _;
 
-    root /_;
+    index index.opml;
+    expires $expires;
 
-    location /{{ password | safe }}/ {
-      alias /feeds/;
-      index index.opml;
-
-      expires $expires;
-
-      types {
-        application/atom+xml xml;
-        application/xml opml;
-      }
+    types {
+      application/atom+xml xml;
+      application/xml opml;
     }
+
+    {% if password %}
+      root /_;
+
+      location /{{ password | safe }}/ {
+        alias /feeds/;
+      }
+    {% else %}
+      root /feeds/;
+    {% endif %}
+
 
     location ~ \.gz$ {
       internal;
