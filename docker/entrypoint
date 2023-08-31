@@ -5,6 +5,12 @@ if [[ ! -v BASE_URL ]]; then
   exit 1
 fi
 
-generate_nginx "$PASSWORD" > /etc/nginx/nginx.conf
-[[ ! -f /feeds/index.opml ]] && collect
+command do generate nginx > /etc/nginx/nginx.conf
+if [[ ! -f "$FEEDS_DIR/index.opml" ]]; then
+  echo "Fresh installation, run first crawl. This can take a while..."
+  collect
+  command do generate opml > "$FEEDS_DIR/index.opml"
+  echo "Done."
+fi
+
 exec runsvdir /runit

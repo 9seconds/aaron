@@ -1,4 +1,5 @@
 daemon off;
+user root root;
 
 events {
   use epoll;
@@ -47,10 +48,10 @@ http {
       root /_;
 
       location /{{ password | safe }}/ {
-        alias /feeds/;
+        alias {{ output_dir | safe}}/;
       }
     {% else %}
-      root /feeds/;
+      root {{ output_dir | safe}};
     {% endif %}
 
 

@@ -13,9 +13,6 @@ include = [
 ]
 
 [tool.poetry.scripts]
-crawl = "feeder.bin.crawl:main"
-generate_opml = "feeder.bin.generators:generate_opml"
-generate_nginx = "feeder.bin.generators:generate_nginx"
 do = "feeder.bin.do:main"
 
 [tool.poetry.dependencies]

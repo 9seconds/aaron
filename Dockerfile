@@ -24,7 +24,8 @@ RUN tar xf 1.2.tar.gz \
   && make runit-docker.so \
   && mv ./runit-docker.so /runit-docker.so
 
-COPY . /project/
+COPY pyproject.toml poetry.lock README.md /project/
+COPY feeder /project/feeder
 WORKDIR /project/
 
 RUN poetry bundle venv \
@@ -37,12 +38,11 @@ RUN poetry bundle venv \
 
 FROM python:3-slim AS app
 
-HEALTHCHECK \
-  --start-period=1m \
-  CMD info health
+HEALTHCHECK CMD command do healthcheck
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/app/bin
 ENV PASSWORD ""
+ENV FEEDS_DIR /feeds
 
 EXPOSE 80
 
@@ -53,7 +53,7 @@ RUN apt-get update \
     nginx \
     runit \
     zopfli \
-  && mkdir /feeds /var/log/feeder \
+  && mkdir $FEEDS_DIR /var/log/feeder \
   && apt-get autoremove --yes --purge \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
@@ -66,6 +66,7 @@ ENV LD_PRELOAD=/usr/lib/runit-docker/runit-docker.so
 COPY ./docker/collect /usr/local/bin/collect
 COPY ./docker/entrypoint /usr/local/bin/entrypoint
 COPY ./docker/runit /runit
+COPY scrapy.cfg /
 
 COPY --from=build /app /app
 COPY --from=build /runit-docker.so /usr/lib/runit-docker/runit-docker.so

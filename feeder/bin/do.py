@@ -3,67 +3,173 @@
 import argparse
 import datetime
 import os
+import re
 import pathlib
 import sys
 import urllib.parse
 import urllib.request
 
 import humanize
+import tzlocal
 
+import feeder
 import feeder.bin
-import feeder.bin.generators
-
-
-FEEDS_DIR = pathlib.Path(os.getenv("FEEDS_DIR", "/feeds"))
 
 
 def main():
     if not os.getenv("BASE_URL"):
         sys.exit("Base URL is not defined")
 
-    parser = argparse.ArgumentParser(
-        description="Do various things with feeder"
-    )
+    def type_url(value):
+        value = (value or "").strip()
 
+        if not value:
+            raise argparse.ArgumentTypeError("Value is not defined")
+
+        parsed = urllib.parse.urlparse(value)
+        if not parsed.scheme:
+            raise argparse.ArgumentTypeError(
+                f"Scheme for URL {value} is not defined"
+            )
+
+        if not parsed.netloc:
+            raise argparse.ArgumentTypeError(f"Netloc for URL {value}")
+
+        return value
+
+    def type_password(value):
+        return urllib.parse.quote(value or "")
+
+    def type_dir(value):
+        return pathlib.Path(value).resolve()
+
+    def add_base_url(subparser):
+        subparser.add_argument(
+            "-b",
+            "--base-url",
+            type=type_url,
+            default=os.getenv("BASE_URL", ""),
+            help="Base URL for the HTTP endpoint",
+        )
+
+    def add_password(subparser):
+        subparser.add_argument(
+            "-p",
+            "--password",
+            type=type_password,
+            default=os.getenv("PASSWORD", ""),
+            help="Access password",
+        )
+
+    def add_output_dir(subparser):
+        subparser.add_argument(
+            "-o",
+            "--output-dir",
+            type=type_dir,
+            default=os.getenv("FEEDS_DIR", "/feeds"),
+            help="Directory to store output files",
+        )
+
+    parser = argparse.ArgumentParser(
+        description="Do various things with feeder",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
     subcommands = parser.add_subparsers(required=True)
 
-    url = subcommands.add_parser("url", description="Get OPML url")
-    url.set_defaults(func=do_url)
-
-    health = subcommands.add_parser(
-        "healthcheck", description="Run healthcheck"
+    sub_generate = subcommands.add_parser(
+        "generate", help="Generate output related to the container"
     )
-    health.set_defaults(func=do_healthcheck)
-
-    health = subcommands.add_parser(
-        "list-spiders", description="Get list of spiders"
+    add_base_url(sub_generate)
+    add_password(sub_generate)
+    add_output_dir(sub_generate)
+    sub_generate.add_argument(
+        "template",
+        choices={"opml", "nginx", "url"},
+        help="Template to generate",
     )
-    health.set_defaults(func=do_list_spiders)
+    sub_generate.set_defaults(func=do_generate)
+
+    sub_healthcheck = subcommands.add_parser(
+        "healthcheck",
+        help="Verify feeder health",
+    )
+    add_base_url(sub_healthcheck)
+    add_password(sub_healthcheck)
+    sub_healthcheck.set_defaults(func=do_healthcheck)
 
     last_updated = subcommands.add_parser(
-        "last_updated", description="Date of last update"
+        "last-updated", help="Show dates of last update"
+    )
+    add_output_dir(last_updated)
+    last_updated.add_argument(
+        "-i",
+        "--iso",
+        action="store_true",
+        default=False,
+        help="Show timestamps in ISO formats",
     )
     last_updated.set_defaults(func=do_last_updated)
+
+    list_spiders = subcommands.add_parser(
+        "list-spiders", help="List available spiders"
+    )
+    list_spiders.set_defaults(func=do_list_spiders)
 
     run = subcommands.add_parser("run", help="Run a spider")
     run.add_argument(
         "spider",
         nargs=argparse.ZERO_OR_MORE,
-        choices=feeder.bin.list_spiders(),
+        default="",
         help="Spider names",
     )
+    add_output_dir(run)
     run.set_defaults(func=do_run)
 
     options = parser.parse_args()
     options.func(options)
 
 
-def do_url(_):
-    print(urllib.parse.urljoin(os.getenv("BASE_URL"), get_password() + "/"))
+def do_generate(options):
+    match options.template:
+        case "opml":
+            return do_generate_opml(options)
+        case "nginx":
+            return do_generate_nginx(options)
+        case "url":
+            return do_generate_url(options)
+        case _:
+            raise ValueError(f"Unknown template {options.template}")
 
 
-def do_healthcheck(_):
-    url = urllib.parse.urljoin("http://127.0.0.1:80", get_password() + "/")
+def do_generate_opml(options):
+    items = []
+
+    process = feeder.bin.get_crawler_process()
+    for name in feeder.bin.list_spiders():
+        crawler = process.create_crawler(name)
+        items.append(
+            {
+                "feed_url": urllib.parse.urljoin(
+                    options.base_url, f"{options.password}/{name}.xml"
+                ),
+                "html_url": crawler.settings.get("FEED_ID"),
+                "title": crawler.settings.get("FEED_TITLE"),
+            }
+        )
+
+    print(feeder.render_opml(items))
+
+
+def do_generate_nginx(options):
+    print(feeder.render_nginx(re.escape(options.password), options.output_dir))
+
+
+def do_generate_url(options):
+    print(urllib.parse.urljoin(options.base_url, options.password + "/"))
+
+
+def do_healthcheck(options):
+    url = urllib.parse.urljoin("http://127.0.0.1:80", options.password + "/")
 
     request = urllib.request.Request(url)
     request.add_header("User-Agent", "feeder-healthcheck")
@@ -80,22 +186,28 @@ def do_healthcheck(_):
     print("OK")
 
 
+def do_last_updated(options):
+    local_tz = tzlocal.get_localzone()
+    now = datetime.datetime.now(local_tz)
+
+    for path in sorted(options.output_dir.iterdir()):
+        timestamp = datetime.datetime.fromtimestamp(
+            path.stat().st_mtime,
+            tz=local_tz,
+        )
+
+        if options.iso:
+            to_show = timestamp.isoformat()
+        else:
+            to_show = f"{humanize.naturaldelta(now - timestamp)} ago"
+
+        print(f"{path.name}: {to_show}")
+
+
 def do_list_spiders(_):
     for name in feeder.bin.list_spiders():
         print(name)
 
 
-def do_last_updated(_):
-    now = datetime.datetime.now()
-
-    for path in sorted(FEEDS_DIR.iterdir()):
-        timestamp = datetime.datetime.fromtimestamp(path.stat().st_mtime)
-        print(f"{path.name}: {humanize.naturaldelta(now - timestamp)} ago")
-
-
 def do_run(options):
-    return feeder.bin.run_crawl(options.spider, FEEDS_DIR)
-
-
-def get_password():
-    return feeder.bin.generators.password_type(os.getenv("PASSWORD") or "")
+    return feeder.bin.run_crawl(options.spider, options.output_dir)

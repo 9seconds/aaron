@@ -21,7 +21,8 @@ def render_opml(items):
     return JinjaEnvironment.get_template("opml.xml.j2").render(items=items)
 
 
-def render_nginx(password):
+def render_nginx(password, output_dir):
     return JinjaEnvironment.get_template("nginx.conf.j2").render(
-        password=password
+        password=password,
+        output_dir=output_dir,
     )
