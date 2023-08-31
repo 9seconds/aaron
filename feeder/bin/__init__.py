@@ -39,8 +39,7 @@ def get_scrapy_project_settings():
 def get_crawler_process():
     settings = scrapy.utils.project.get_project_settings()
     process = scrapy.crawler.CrawlerProcess(
-        settings,
-        install_root_handler=False
+        settings, install_root_handler=False
     )
 
     return process

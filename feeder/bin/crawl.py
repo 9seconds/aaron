@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
-import copy
-import os
 import pathlib
 import shutil
 import tempfile
 
 import feeder.bin
-
-import scrapy.crawler
-import scrapy.utils.project
 
 
 @feeder.bin.with_scrapy
@@ -27,13 +22,17 @@ def main():
     with tempfile.TemporaryDirectory() as _tmpdir:
         tmpdir = pathlib.Path(_tmpdir)
         for name in names:
-            crawler = feeder.bin.get_crawler(name, process, {
-                "FEEDS": {
-                    tmpdir.joinpath(f"{name}.xml"): {
-                        "format": "atom",
+            crawler = feeder.bin.get_crawler(
+                name,
+                process,
+                {
+                    "FEEDS": {
+                        tmpdir.joinpath(f"{name}.xml"): {
+                            "format": "atom",
+                        }
                     }
-                }
-            })
+                },
+            )
             process.crawl(crawler)
 
         process.start()
@@ -45,7 +44,7 @@ def get_options():
     all_spiders = set(feeder.bin.list_spiders())
 
     def spiders_list_type(value):
-        names = set(v.strip() for v in value.split(','))
+        names = set(v.strip() for v in value.split(","))
         if unknown_names := names - all_spiders:
             raise argparse.ArgumentTypeError(
                 f"Unknown spiders {', '.join(sorted(unknown_names))}"
@@ -54,7 +53,8 @@ def get_options():
         return names
 
     parser.add_argument(
-        "-s", "--spider",
+        "-s",
+        "--spider",
         type=spiders_list_type,
         help="List of spiders to use (comma-separated-list)",
         default=None,
