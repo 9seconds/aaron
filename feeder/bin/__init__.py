@@ -1,6 +1,9 @@
 import copy
 import os
 import functools
+import shutil
+import pathlib
+import tempfile
 
 import scrapy.crawler
 import scrapy.utils.project
@@ -62,3 +65,33 @@ def get_crawler(name, process, settings=None):
     crawler = scrapy.crawler.Crawler(spider_cls, all_settings)
 
     return crawler
+
+
+def run_crawl(names, output_dir):
+    output_dir.mkdir(exist_ok=True)
+
+    process = get_crawler_process()
+    all_names = set(process.spider_loader.list())
+    names = set(names or ()) or all_names
+
+    if absent := names - all_names:
+        raise ValueError(f"Unknown spiders {', '.join(sorted(absent))}")
+
+    with tempfile.TemporaryDirectory() as _tmpdir:
+        tmpdir = pathlib.Path(_tmpdir)
+        for name in names:
+            crawler = get_crawler(
+                name,
+                process,
+                {
+                    "FEEDS": {
+                        tmpdir.joinpath(f"{name}.xml"): {
+                            "format": "atom",
+                        }
+                    }
+                },
+            )
+            process.crawl(crawler)
+
+        process.start()
+        shutil.copytree(tmpdir, output_dir, dirs_exist_ok=True)

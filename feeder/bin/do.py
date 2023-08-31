@@ -14,6 +14,9 @@ import feeder.bin
 import feeder.bin.generators
 
 
+FEEDS_DIR = pathlib.Path(os.getenv("FEEDS_DIR", "/feeds"))
+
+
 def main():
     if not os.getenv("BASE_URL"):
         sys.exit("Base URL is not defined")
@@ -41,6 +44,15 @@ def main():
         "last_updated", description="Date of last update"
     )
     last_updated.set_defaults(func=do_last_updated)
+
+    run = subcommands.add_parser("run", help="Run a spider")
+    run.add_argument(
+        "spider",
+        nargs=argparse.ZERO_OR_MORE,
+        choices=feeder.bin.list_spiders(),
+        help="Spider names",
+    )
+    run.set_defaults(func=do_run)
 
     options = parser.parse_args()
     options.func(options)
@@ -74,12 +86,15 @@ def do_list_spiders(_):
 
 
 def do_last_updated(_):
-    feed_dir = pathlib.Path("out")
     now = datetime.datetime.now()
 
-    for path in sorted(feed_dir.iterdir()):
+    for path in sorted(FEEDS_DIR.iterdir()):
         timestamp = datetime.datetime.fromtimestamp(path.stat().st_mtime)
         print(f"{path.name}: {humanize.naturaldelta(now - timestamp)} ago")
+
+
+def do_run(options):
+    return feeder.bin.run_crawl(options.spider, FEEDS_DIR)
 
 
 def get_password():
