@@ -8,16 +8,21 @@ import tempfile
 import feeder.bin
 
 
-@feeder.bin.with_scrapy
 def main():
     options = get_options()
-    options.output_dir.mkdir(exist_ok=True)
+
+    return run(options.spider, options.output_dir)
+
+
+def run(names, output_dir):
+    output_dir.mkdir(exist_ok=True)
 
     process = feeder.bin.get_crawler_process()
+    all_names = set(process.spider_loader.list())
+    names = set(names or ()) or all_names
 
-    names = options.spider
-    if not names:
-        names = set(process.spider_loader.list())
+    if absent := names - all_names:
+        raise ValueError(f"Unknown spiders {', '.join(sorted(absent))}")
 
     with tempfile.TemporaryDirectory() as _tmpdir:
         tmpdir = pathlib.Path(_tmpdir)
@@ -36,26 +41,16 @@ def main():
             process.crawl(crawler)
 
         process.start()
-        shutil.copytree(tmpdir, options.output_dir, dirs_exist_ok=True)
+        shutil.copytree(tmpdir, output_dir, dirs_exist_ok=True)
 
 
 def get_options():
     parser = argparse.ArgumentParser(description="Crawl all websites")
-    all_spiders = set(feeder.bin.list_spiders())
-
-    def spiders_list_type(value):
-        names = set(v.strip() for v in value.split(","))
-        if unknown_names := names - all_spiders:
-            raise argparse.ArgumentTypeError(
-                f"Unknown spiders {', '.join(sorted(unknown_names))}"
-            )
-
-        return names
 
     parser.add_argument(
         "-s",
         "--spider",
-        type=spiders_list_type,
+        type=lambda value: {v.strip() for v in value.split(",")},
         help="List of spiders to use (comma-separated-list)",
         default=None,
     )
