@@ -72,7 +72,6 @@ def do_spiders(_):
     settings.set("LOG_LEVEL", "ERROR")
 
     process = scrapy.crawler.CrawlerProcess(settings)
-    process = scrapy.crawler.CrawlerProcess(settings)
 
     for name in sorted(process.spider_loader.list()):
         print(name)
