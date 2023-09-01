@@ -7,7 +7,7 @@ import aaron
 
 
 class AtomExporter(scrapy.exporters.BaseItemExporter):
-    def __init__(self, file, *args, **kwargs):
+    def __init__(self, file, *args, **kwargs):  # noqa
         kwargs["export_empty_fields"] = False
 
         super().__init__(*args, **kwargs)
