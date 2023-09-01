@@ -16,29 +16,6 @@ import aaron
 
 
 def main():
-    def type_url(value):
-        value = (value or "").strip()
-
-        if not value:
-            raise argparse.ArgumentTypeError("Value is not defined")
-
-        parsed = urllib.parse.urlparse(value)
-        if not parsed.scheme:
-            raise argparse.ArgumentTypeError(
-                f"Scheme for URL {value} is not defined"
-            )
-
-        if not parsed.netloc:
-            raise argparse.ArgumentTypeError(f"Netloc for URL {value}")
-
-        return value
-
-    def type_password(value):
-        return urllib.parse.quote(value or "")
-
-    def type_dir(value):
-        return pathlib.Path(value).resolve()
-
     def add_base_url(subparser):
         subparser.add_argument(
             "-b",
@@ -123,6 +100,32 @@ def main():
 
     options = parser.parse_args()
     options.func(options)
+
+
+def type_url(value):
+    value = (value or "").strip()
+
+    if not value:
+        raise argparse.ArgumentTypeError("Value is not defined")
+
+    parsed = urllib.parse.urlparse(value)
+    if not parsed.scheme:
+        raise argparse.ArgumentTypeError(
+            f"Scheme for URL {value} is not defined"
+        )
+
+    if not parsed.netloc:
+        raise argparse.ArgumentTypeError(f"Netloc for URL {value}")
+
+    return value
+
+
+def type_password(value):
+    return urllib.parse.quote(value or "")
+
+
+def type_dir(value):
+    return pathlib.Path(value).resolve()
 
 
 def do_generate(options):

@@ -292,6 +292,19 @@ files = [
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
+name = "cognitive-complexity"
+version = "1.3.0"
+description = "Library to calculate Python functions cognitive complexity via code"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "cognitive_complexity-1.3.0.tar.gz", hash = "sha256:a0cfbd47dee0b19f4056f892389f501694b205c3af69fb703cc744541e03dde5"},
+]
+
+[package.dependencies]
+setuptools = "*"
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -552,6 +565,20 @@ files = [
 
 [package.dependencies]
 flake8 = ">=4"
+
+[[package]]
+name = "flake8-cognitive-complexity"
+version = "0.1.0"
+description = "An extension for flake8 that validates cognitive functions complexity"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "flake8_cognitive_complexity-0.1.0.tar.gz", hash = "sha256:f202df054e4f6ff182b659c261922b9c684628a47beb19cb0973c50d6a7831c1"},
+]
+
+[package.dependencies]
+cognitive_complexity = "*"
+setuptools = "*"
 
 [[package]]
 name = "flake8-comprehensions"
@@ -1936,4 +1963,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "8cca62fb1363b94f1a386b70b2b95c906181cd853eb5f20f10f8909aeb312bc4"
+content-hash = "974420dcec1f8116f65d2b55fa31dd2d3a88b4c368300763308f171a82eba82a"
