@@ -1,7 +1,7 @@
 import textwrap
 
-import w3lib.html
 import scrapy.exceptions
+import w3lib.html
 
 import aaron.items
 

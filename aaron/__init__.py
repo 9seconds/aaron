@@ -1,12 +1,12 @@
-import shutil
-import pathlib
-import tempfile
 import copy
 import os
+import pathlib
+import shutil
+import tempfile
 
 import jinja2
-import scrapy.spiders
 import scrapy.crawler
+import scrapy.spiders
 import scrapy.utils.log
 import scrapy.utils.project
 import scrapy.utils.reactor

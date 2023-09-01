@@ -1,5 +1,5 @@
-import scrapy.signals
 import scrapy.extensions.closespider
+import scrapy.signals
 
 
 class CloseSpider(scrapy.extensions.closespider.CloseSpider):

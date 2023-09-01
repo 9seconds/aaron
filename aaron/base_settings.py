@@ -1,15 +1,13 @@
+import importlib
 import os
 import pathlib
-import importlib
 
 
 MAX_ITEMS = 20
 SUMMARY_LENGTH = 140
 CLOSESPIDER_ITEMS_FACTOR = 2
 CLOSESPIDER_TIMEOUT_NO_ITEM = 60
-
 # --- scrapy own settings ---
-
 BOT_NAME = "aaron"
 SPIDER_MODULES = [
     "aaron.spiders",
@@ -55,7 +53,6 @@ EXTENSIONS = {
 ITEM_PIPELINES = {
     "aaron.pipelines.Pipeline": 100,
 }
-
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"

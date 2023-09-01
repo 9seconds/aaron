@@ -3,8 +3,8 @@
 import argparse
 import datetime
 import os
-import re
 import pathlib
+import re
 import sys
 import urllib.parse
 import urllib.request
