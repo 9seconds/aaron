@@ -84,6 +84,12 @@ def get_crawler(name, process, settings=None):
 
 
 def run_crawl(names, output_dir):
+    def ignore_empty_files(src, names):
+        root = pathlib.Path(src)
+        return [
+            name for name in names if not root.joinpath(name).stat().st_size
+        ]
+
     output_dir = pathlib.Path(output_dir)
     output_dir.mkdir(exist_ok=True)
 
@@ -111,7 +117,9 @@ def run_crawl(names, output_dir):
             process.crawl(crawler)
 
         process.start()
-        shutil.copytree(tmpdir, output_dir, dirs_exist_ok=True)
+        shutil.copytree(
+            tmpdir, output_dir, ignore=ignore_empty_files, dirs_exist_ok=True
+        )
 
 
 scrapy.utils.log.configure_logging(SCRAPY_SETTINGS)
