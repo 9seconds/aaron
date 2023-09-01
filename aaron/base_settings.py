@@ -7,7 +7,11 @@ MAX_ITEMS = 20
 SUMMARY_LENGTH = 140
 CLOSESPIDER_ITEMS_FACTOR = 2
 CLOSESPIDER_TIMEOUT_NO_ITEM = 60
-# --- scrapy own settings ---
+
+SPIDERS = []
+
+# ---------------------------------------------------------------------------- #
+
 BOT_NAME = "aaron"
 SPIDER_MODULES = [
     "aaron.spiders",

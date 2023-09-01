@@ -60,7 +60,7 @@ class Pipeline:
 
     def attach_metadata(self, item, settings):
         item["metadata"] = aaron.items.Metadata(
-            id=settings["FEED_ID"],
+            item_id=settings["FEED_ID"],
             title=settings["FEED_TITLE"],
             author_name=settings["FEED_AUTHOR_NAME"],
             author_email=settings["FEED_AUTHOR_EMAIL"],

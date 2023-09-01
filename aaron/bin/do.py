@@ -144,7 +144,7 @@ def do_generate_opml(options):
     items = []
 
     process = aaron.get_crawler_process()
-    for name in process.spider_loader.list_spiders():
+    for name in aaron.list_spiders():
         crawler = process.create_crawler(name)
         items.append(
             {

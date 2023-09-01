@@ -63,7 +63,11 @@ def render_template(template_name, ctx):
 
 
 def list_spiders():
-    return sorted(get_crawler_process().spider_loader.list())
+    settings = scrapy.utils.project.get_project_settings()
+    all_spiders = frozenset(get_crawler_process().spider_loader.list())
+    wanted_spiders = frozenset(settings.get("SPIDERS")) or all_spiders
+
+    return sorted(all_spiders & wanted_spiders)
 
 
 def run_crawl(names, output_dir):
@@ -77,8 +81,8 @@ def run_crawl(names, output_dir):
     output_dir.mkdir(exist_ok=True)
 
     process = get_crawler_process()
-    all_names = set(process.spider_loader.list())
-    names = set(names or ()) or all_names
+    all_names = frozenset(list_spiders())
+    names = frozenset(names or ()) or all_names
 
     if absent := names - all_names:
         raise ValueError(f"Unknown spiders {', '.join(sorted(absent))}")

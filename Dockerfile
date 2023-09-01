@@ -1,4 +1,4 @@
-FROM python:3-slim AS build
+FROM python:3.11-slim AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -36,7 +36,7 @@ RUN poetry bundle venv \
 
 # -----------------------------------------------------------------------------
 
-FROM python:3-slim AS app
+FROM python:3.11-slim AS app
 
 HEALTHCHECK CMD command do healthcheck
 
@@ -63,14 +63,15 @@ RUN apt-get update \
 COPY ./docker/crontab /crontab
 RUN crontab /crontab && rm /crontab
 
-ENV LD_PRELOAD=/usr/lib/runit-docker/runit-docker.so
-
 COPY ./docker/collect /usr/local/bin/collect
 COPY ./docker/entrypoint /usr/local/bin/entrypoint
 COPY ./docker/runit /runit
 COPY scrapy.cfg /
 
 COPY --from=build /app /app
+RUN ln -s /settings.py /app/lib/python3.11/site-packages/aaron/user_settings.py
+
 COPY --from=build /runit-docker.so /usr/lib/runit-docker/runit-docker.so
+ENV LD_PRELOAD=/usr/lib/runit-docker/runit-docker.so
 
 CMD ["entrypoint"]
