@@ -611,6 +611,19 @@ flake8 = ">=3.0"
 pycodestyle = "*"
 
 [[package]]
+name = "flake8-functions-names"
+version = "0.4.0"
+description = "An extension for flake8 that validates functions names, decomposition and conformity with annotations."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "flake8_functions_names-0.4.0.tar.gz", hash = "sha256:27aeb881636680a130f609482c1d0f37d1b2e84a76b20b813d079c888ee0a13e"},
+]
+
+[package.dependencies]
+setuptools = "*"
+
+[[package]]
 name = "flake8-implicit-str-concat"
 version = "0.4.0"
 description = "Flake8 plugin to encourage correct string literal concatenation."
@@ -1912,4 +1925,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "79c97d9a16b5387bafc098b74b5106564797a9f899c609fb72a673038afe72f8"
+content-hash = "c3a682c3281b90e9bf0b77f4c7ae86755be8bc5b242b1ee9bdf4f9ab830ca34e"
