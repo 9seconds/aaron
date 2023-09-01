@@ -12,16 +12,27 @@ import scrapy.utils.project
 import scrapy.utils.reactor
 
 
-os.environ.setdefault("SCRAPY_SETTINGS_MODULE", "aaron.settings")
+os.environ["SCRAPY_SETTINGS_MODULE"] = "aaron.settings"
 
 
 SCRAPY_SETTINGS = scrapy.utils.project.get_project_settings()
+
+bytecode_cache = None
+cache_dir = os.getenv("AARON_CACHE_DIR")
+if cache_dir:
+    cache_dir = pathlib.Path(cache_dir).joinpath("jinja2")
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    bytecode_cache = jinja2.FileSystemBytecodeCache(str(cache_dir))
 
 JINJA_ENV = jinja2.Environment(
     loader=jinja2.PackageLoader("aaron", "templates"),
     autoescape=jinja2.select_autoescape(
         enabled_extensions=("html", "html.j2", "xml", "xml.j2"),
     ),
+    auto_reload=False,
+    keep_trailing_newline=True,
+    bytecode_cache=bytecode_cache,
 )
 
 

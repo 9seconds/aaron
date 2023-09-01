@@ -43,7 +43,7 @@ class Cynicmansion(aaron.Spider):
             "languages": ["ru"],
             "settings": {
                 "TIMEZONE": "Europe/Moscow",
-            }
+            },
         }
 
         loader.add_xpath("url", ".//table[1]//a[1]/@href")
