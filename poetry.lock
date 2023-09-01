@@ -636,6 +636,19 @@ files = [
 flake8 = ">3.0.0"
 
 [[package]]
+name = "flake8-picky-parentheses"
+version = "0.5.0"
+description = "flake8 plugin to nitpick about parenthesis, brackets, and braces"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "flake8-picky-parentheses-0.5.0.tar.gz", hash = "sha256:347d0919978c5bb9e254967634c05067c931bf79b3f3ee27d35bcdd8b2c9db06"},
+]
+
+[package.dependencies]
+flake8 = ">=3.7"
+
+[[package]]
 name = "flake8-secure-coding-standard"
 version = "1.4.0"
 description = "Flake8 plugin adding some checks to make Python code adhere to more secure coding standard"
@@ -1772,4 +1785,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "c222ac32392316156d6c1442852804b64154c4f2e82f7abb809a3c5850b1e006"
+content-hash = "dba43caa5f55e6ab540b93e1d6601243a1747b7247cd62007aa456d66ac3b99d"

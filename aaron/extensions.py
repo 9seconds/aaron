@@ -11,6 +11,6 @@ class CloseSpider(scrapy.extensions.closespider.CloseSpider):
                 self.item_scraped, signal=scrapy.signals.item_scraped
             )
 
-        self.close_on["itemcount"] = crawler.settings.getint(
-            "CLOSESPIDER_ITEMS_FACTOR"
-        ) * crawler.settings.getint("MAX_ITEMS")
+        item_factor = crawler.settings.getint("CLOSESPIDER_ITEMS_FACTOR")
+        max_items = crawler.settings.getint("MAX_ITEMS")
+        self.close_on["itemcount"] = item_factor * max_items
