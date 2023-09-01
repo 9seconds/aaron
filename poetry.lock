@@ -537,6 +537,20 @@ files = [
 flake8 = ">=3.0,<3.2.0 || >3.2.0"
 
 [[package]]
+name = "flake8-datetimez"
+version = "20.10.0"
+description = "A plugin for flake8 to ban the usage of unsafe naive datetime class."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "flake8-datetimez-20.10.0.tar.gz", hash = "sha256:78939f3bcbe2b7fe48235998545c869c27cdfac3f45685099a3f7366c1ffebc6"},
+    {file = "flake8_datetimez-20.10.0-py3-none-any.whl", hash = "sha256:57aa2f55eb88797e2d8c06bd536ff8049b9f1ba877d81dc06ff8d9bdc195c1fc"},
+]
+
+[package.dependencies]
+flake8 = ">=3.0.0"
+
+[[package]]
 name = "flake8-secure-coding-standard"
 version = "1.4.0"
 description = "Flake8 plugin adding some checks to make Python code adhere to more secure coding standard"
@@ -1673,4 +1687,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "e87730b006377114b2bd9a83a9a76236bdd24a3ec4d9d64f4e332a83c6bb0035"
+content-hash = "86cb5fc7c54e5f49945bd997f6ed1ff5ea48e455e4b6ef50be1dfe60067efa9d"
