@@ -774,6 +774,22 @@ files = [
 flake8 = "*"
 
 [[package]]
+name = "flake8-pyproject"
+version = "1.2.3"
+description = "Flake8 plug-in loading the configuration from pyproject.toml"
+optional = false
+python-versions = ">= 3.6"
+files = [
+    {file = "flake8_pyproject-1.2.3-py3-none-any.whl", hash = "sha256:6249fe53545205af5e76837644dc80b4c10037e73a0e5db87ff562d75fb5bd4a"},
+]
+
+[package.dependencies]
+Flake8 = ">=5"
+
+[package.extras]
+dev = ["pyTest", "pyTest-cov"]
+
+[[package]]
 name = "flake8-return"
 version = "1.2.0"
 description = "Flake8 plugin that checks return values"
@@ -1963,4 +1979,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "974420dcec1f8116f65d2b55fa31dd2d3a88b4c368300763308f171a82eba82a"
+content-hash = "b7f2c9256238d5244503ea223a68e8482fa398bcd91464a829a4e1d8bd7057da"

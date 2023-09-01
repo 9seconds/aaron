@@ -30,6 +30,16 @@ humanize = "^4.8.0"
 line-length = 80
 target-version = ["py311"]
 
+[tool.flake8]
+max-line-length = 80
+exclude = [
+  '.git',
+  '__pycache__'
+]
+literal-inline-quotes = "double"
+literal-multiline-quotes = "double"
+enable-extensions = "G"
+
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
 flake8 = "^6.1.0"
@@ -63,6 +73,7 @@ pep8-naming = "^0.13.3"
 flake8-functions-names = "^0.4.0"
 flake8-variables-names = "^0.0.6"
 flake8-cognitive-complexity = "^0.1.0"
+flake8-pyproject = "^1.2.3"
 
 [build-system]
 requires = ["poetry-core"]
