@@ -623,6 +623,19 @@ attrs = ">=19.3.0"
 flake8 = ">=3.7.9"
 
 [[package]]
+name = "flake8-newspaper-style"
+version = "0.4.3"
+description = "Check code for newspaper style"
+optional = false
+python-versions = "*"
+files = [
+    {file = "flake8-newspaper-style-0.4.3.tar.gz", hash = "sha256:d05924256cb9992eb61d3718c7301bc8f3b2a847f159b5f9e25a508261359974"},
+]
+
+[package.dependencies]
+flake8 = ">3.0.0"
+
+[[package]]
 name = "flake8-secure-coding-standard"
 version = "1.4.0"
 description = "Flake8 plugin adding some checks to make Python code adhere to more secure coding standard"
@@ -1759,4 +1772,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "2190a1af1938fa6b3362a733541dbb2e0f42bd7f8e0f3c00ba2e7639f02874c5"
+content-hash = "c222ac32392316156d6c1442852804b64154c4f2e82f7abb809a3c5850b1e006"

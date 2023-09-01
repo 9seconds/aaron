@@ -36,10 +36,6 @@ JINJA_ENV = jinja2.Environment(
 )
 
 
-def render_template(template_name, ctx):
-    return JINJA_ENV.get_template(template_name).render(ctx)
-
-
 def render_html(template_name, ctx):
     return render_template(f"{template_name}.html.j2", ctx)
 
@@ -62,25 +58,12 @@ def render_nginx(password, output_dir):
     )
 
 
-def get_crawler_process():
-    return scrapy.crawler.CrawlerProcess(
-        SCRAPY_SETTINGS, install_root_handler=False
-    )
+def render_template(template_name, ctx):
+    return JINJA_ENV.get_template(template_name).render(ctx)
 
 
 def list_spiders():
     return sorted(get_crawler_process().spider_loader.list())
-
-
-def get_crawler(name, process, settings=None):
-    spider_cls = process.spider_loader.load(name)
-
-    all_settings = copy.deepcopy(process.settings)
-    all_settings.setdict(settings or {}, priority="cmdline")
-
-    crawler = scrapy.crawler.Crawler(spider_cls, all_settings)
-
-    return crawler
 
 
 def run_crawl(names, output_dir):
@@ -120,6 +103,23 @@ def run_crawl(names, output_dir):
         shutil.copytree(
             tmpdir, output_dir, ignore=ignore_empty_files, dirs_exist_ok=True
         )
+
+
+def get_crawler_process():
+    return scrapy.crawler.CrawlerProcess(
+        SCRAPY_SETTINGS, install_root_handler=False
+    )
+
+
+def get_crawler(name, process, settings=None):
+    spider_cls = process.spider_loader.load(name)
+
+    all_settings = copy.deepcopy(process.settings)
+    all_settings.setdict(settings or {}, priority="cmdline")
+
+    crawler = scrapy.crawler.Crawler(spider_cls, all_settings)
+
+    return crawler
 
 
 scrapy.utils.log.configure_logging(SCRAPY_SETTINGS)
