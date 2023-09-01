@@ -637,6 +637,20 @@ typing-extensions = ">=3.7.4.2"
 dev = ["flake8 (>=3.8.0,<6.0.0)", "flake8-annotations", "flake8-bandit", "flake8-bugbear", "flake8-commas", "flake8-comprehensions", "flake8-continuation", "flake8-datetimez", "flake8-docstrings", "flake8-import-order", "flake8-literal", "flake8-modern-annotations", "flake8-noqa", "flake8-polyfill", "flake8-pyproject", "flake8-requirements", "flake8-typechecking-import", "flake8-use-fstring", "mypy", "pep8-naming"]
 
 [[package]]
+name = "flake8-logging-format"
+version = "0.9.0"
+description = ""
+optional = false
+python-versions = "*"
+files = [
+    {file = "flake8-logging-format-0.9.0.tar.gz", hash = "sha256:e830cc49091e4b8ab9ea3da69a3da074bd631ce9a7db300e5c89fb48ba4a6986"},
+]
+
+[package.extras]
+lint = ["flake8"]
+test = ["PyHamcrest", "pytest", "pytest-cov"]
+
+[[package]]
 name = "flake8-multiline-containers"
 version = "0.0.19"
 description = "Ensure a consistent format for multiline containers."
@@ -1839,4 +1853,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "e7644490b2cfcf112abd65fe8cb676342dbb636dd8551c67c50235b5a2250eb7"
+content-hash = "0f4b15c23eb7a49e114d2ba30b7f3a9ac63a9cd20babb0ced66f09516c19c487"
