@@ -576,6 +576,20 @@ files = [
 ]
 
 [[package]]
+name = "flake8-indent-in-def"
+version = "0.1.2"
+description = "A flake8 plugin that enforces 8-space indentation in function/class definitions"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "flake8_indent_in_def-0.1.2-py2.py3-none-any.whl", hash = "sha256:ef56852e377f333d84d9d926287583f174e7f2eb757658e304af1fbfb2df6cb9"},
+    {file = "flake8_indent_in_def-0.1.2.tar.gz", hash = "sha256:da9745797813554dabca5ae3bae1606aaf85659f49fadc62bb6e0908dcac7a17"},
+]
+
+[package.dependencies]
+flake8 = ">=4"
+
+[[package]]
 name = "flake8-secure-coding-standard"
 version = "1.4.0"
 description = "Flake8 plugin adding some checks to make Python code adhere to more secure coding standard"
@@ -1712,4 +1726,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b86779a422e9c853b3215697ee5578956e1ecfb13dbf7a64e0259b0eca693dd5"
+content-hash = "262282297452235bb449919be66cbbdab134d0a3da5ab7aeb211b93fa7766d4a"

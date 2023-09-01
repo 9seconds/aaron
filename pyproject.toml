@@ -47,6 +47,7 @@ flake8-comprehensions = "^3.14.0"
 flake8-datetimez = "^20.10.0"
 flake8-datetime-utcnow-plugin = "^0.1.2"
 flake8-implicit-str-concat = "^0.4.0"
+flake8-indent-in-def = "^0.1.2"
 
 [build-system]
 requires = ["poetry-core"]
