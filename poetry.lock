@@ -679,6 +679,23 @@ files = [
 flake8 = ">3.0.0"
 
 [[package]]
+name = "flake8-pep3101"
+version = "2.0.0"
+description = "Checks for old string formatting."
+optional = false
+python-versions = "*"
+files = [
+    {file = "flake8-pep3101-2.0.0.tar.gz", hash = "sha256:ae2ee1758734a473ca971b4bf9ff09c961b6099916db91fdb6b9718328dfcacb"},
+    {file = "flake8_pep3101-2.0.0-py3-none-any.whl", hash = "sha256:1d818e1f53c6d26e875714f2f041ec15fbb23c17e2268dbbb024e9c3383541cd"},
+]
+
+[package.dependencies]
+flake8 = "*"
+
+[package.extras]
+test = ["pytest"]
+
+[[package]]
 name = "flake8-picky-parentheses"
 version = "0.5.0"
 description = "flake8 plugin to nitpick about parenthesis, brackets, and braces"
@@ -1853,4 +1870,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0f4b15c23eb7a49e114d2ba30b7f3a9ac63a9cd20babb0ced66f09516c19c487"
+content-hash = "d393f375cc00c46545d81298b5df02df3d3aa2eac19fdf88adf1b0814b12403b"

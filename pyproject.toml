@@ -56,6 +56,7 @@ flake8-return = "^1.2.0"
 flake8-broken-line = "^1.0.0"
 flake8-debugger = "^4.1.2"
 flake8-logging-format = "^0.9.0"
+flake8-pep3101 = "^2.0.0"
 
 [build-system]
 requires = ["poetry-core"]
