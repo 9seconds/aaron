@@ -16,9 +16,6 @@ import aaron
 
 
 def main():
-    if not os.getenv("AARON_BASE_URL"):
-        sys.exit("Base URL is not defined")
-
     def type_url(value):
         value = (value or "").strip()
 
