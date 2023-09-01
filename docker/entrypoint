@@ -9,11 +9,16 @@ command do generate nginx > /etc/nginx/nginx.conf
 command do generate opml > /tmp/index.opml
 
 touch -a "$AARON_FEEDS_DIR/index.opml"
-if ! cmp -s /tmp/index.opml "$AARON_FEEDS_DIR/index.opml" >/dev/null 2>&1; then
+if ! cmp -s /tmp/index.opml "$AARON_FEEDS_DIR/index.opml"; then
   echo "Fresh installation, run first crawl. This can take a while..."
+
   collect
   mv /tmp/index.opml "$AARON_FEEDS_DIR/index.opml"
+
   echo "Done."
+else
+  rm -f /tmp/index.opml
 fi
+
 
 exec runsvdir /runit

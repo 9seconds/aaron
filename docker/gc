@@ -1,0 +1,6 @@
+#!/bin/bash
+
+find "$AARON_LOG_DIR" -name 'crawl-*.log' -type f -mtime +7 -delete
+find "$AARON_FEEDS_DIR" -name '*.xml' -type f -mtime +30 -delete
+find "$AARON_CACHE_DIR/http" -type f -atime +30 -delete
+find "$AARON_CACHE_DIR/jinja2" -type f -atime +30 -delete
