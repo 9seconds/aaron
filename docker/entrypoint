@@ -6,10 +6,10 @@ if [[ ! -v BASE_URL ]]; then
 fi
 
 command do generate nginx > /etc/nginx/nginx.conf
-if [[ ! -f "$FEEDS_DIR/index.opml" ]]; then
+if [[ ! -f "$AARON_FEEDS_DIR/index.opml" ]]; then
   echo "Fresh installation, run first crawl. This can take a while..."
   collect
-  command do generate opml > "$FEEDS_DIR/index.opml"
+  command do generate opml > "$AARON_FEEDS_DIR/index.opml"
   echo "Done."
 fi
 

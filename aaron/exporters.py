@@ -1,11 +1,12 @@
 import heapq
 
-import feeder
 import scrapy.exporters
 import scrapy.utils.project
 
+import aaron
 
-class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
+
+class AtomExporter(scrapy.exporters.BaseItemExporter):
     def __init__(self, file, *args, **kwargs):
         kwargs["export_empty_fields"] = False
 
@@ -27,7 +28,7 @@ class FeederAtomExporter(scrapy.exporters.BaseItemExporter):
         if not self.items:
             return
 
-        feed = feeder.render_feed(
+        feed = aaron.render_feed(
             [item for _, _, item in sorted(self.items, reverse=True)]
         )
         self.file.write(feed.encode("utf-8"))

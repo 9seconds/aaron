@@ -1,11 +1,10 @@
-import scrapy
 import w3lib.html
 
-import feeder
-import feeder.items
+import aaron
+import aaron.items
 
 
-class CynicmansionSpider(scrapy.Spider):
+class Cynicmansion(aaron.Spider):
     name = "cynicmansion"
     allowed_domains = ["cynicmansion.ru"]
     start_urls = ["https://cynicmansion.ru"]
@@ -15,7 +14,6 @@ class CynicmansionSpider(scrapy.Spider):
         "FEED_TITLE": "Cynicmansion",
         "FEED_AUTHOR_NAME": "killallhumans",
         "FEED_FAVICON": "https://cynicmansion.ru/media/images/favicon.ico",
-        "AUTOTHROTTLE_ENABLED": False,
     }
 
     def parse(self, response):
@@ -29,12 +27,8 @@ class CynicmansionSpider(scrapy.Spider):
         )
 
     def parse_page(self, response, page):
-        yield from (
-            self.parse_item(el, response)
-            for el in response.xpath(
-                "//div[@class='comics_wrap'][position()>1]"
-            )
-        )
+        for el in response.xpath("//div[@class='comics_wrap'][position()>1]"):
+            yield self.parse_item(el, response)
 
         if page > 1:
             yield response.follow(
@@ -44,13 +38,15 @@ class CynicmansionSpider(scrapy.Spider):
             )
 
     def parse_item(self, root, response):
-        loader = feeder.items.FeedEntryLoader(selector=root)
+        loader = aaron.items.ItemLoader(response=response, selector=root)
+        loader.context["dateparser_config"] = {
+            "languages": ["ru"],
+            "settings": {
+                "TIMEZONE": "Europe/Moscow",
+            }
+        }
 
-        url = root.xpath(".//table[1]//a[1]/@href").extract_first()
-        if not url:
-            return
-
-        loader.add_value("url", response.urljoin(url))
+        loader.add_xpath("url", ".//table[1]//a[1]/@href")
         loader.add_xpath("title", ".//p[@class='comics_name']")
         loader.add_value(
             "updated",
@@ -70,9 +66,12 @@ class CynicmansionSpider(scrapy.Spider):
             return
 
         loader.add_value(
-            "content",
-            feeder.render_template(
-                self, images=images, title=loader.get_output_value("title")
+            "text",
+            self.render_template(
+                {
+                    "images": images,
+                    "title": loader.get_output_value("title"),
+                }
             ),
         )
 

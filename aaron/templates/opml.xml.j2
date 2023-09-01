@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <opml version="2.0">
   <head>
-    <title>Feeder feeds</title>
+    <title>aaron feeds</title>
     <docs>http://opml.org/spec2.opml</docs>
   </head>
   <body>
     {% for item in items %}
-      <outline
-        type="rss"
-        htmlUrl="{{ item.html_url }}"
-        xmlUrl="{{ item.feed_url }}"
-        text="{{ item.title }}" />
+      <outline type="rss" htmlUrl="{{ item.html_url }}" xmlUrl="{{ item.feed_url }}" text="{{ item.title }}" />
     {% endfor %}
   </body>
 </opml>

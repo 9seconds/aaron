@@ -1,15 +1,17 @@
 import os
+import pathlib
 
 
-BOT_NAME = "feeder"
+BOT_NAME = "aaron"
 SPIDER_MODULES = [
-    "feeder.spiders",
+    "aaron.spiders",
 ]
-NEWSPIDER_MODULE = "feeder.spiders"
+NEWSPIDER_MODULE = "aaron.spiders"
 
 MAX_ITEMS = 20
+SUMMARY_LENGTH = 140
 
-DEFAULT_ITEM_CLASS = "feeder.items.FeedEntry"
+DEFAULT_ITEM_CLASS = "aaron.items.Item"
 DEPTH_PRIORITY = -0.5
 DOWNLOAD_TIMEOUT = 30
 LOG_LEVEL = "WARNING"
@@ -19,11 +21,18 @@ MEMUSAGE_LIMIT_MB = 4 * MEMUSAGE_WARNING_MB
 
 TELNETCONSOLE_ENABLED = False
 
-HTTPCACHE_ENABLED = True
+HTTPCACHE_ENABLED = False
 HTTPCACHE_EXPIRATION_SECS = 60 * 60 * 24  # minute  # hour  # day
 HTTPCACHE_GZIP = True
-HTTPCACHE_DIR = os.getenv("FEEDER_HTTPCACHE_DIR", "httpcache")
 HTTPCACHE_POLICY = "scrapy.extensions.httpcache.RFC2616Policy"
+
+cache_dir = os.getenv("AARON_CACHE_DIR")
+if cache_dir:
+    cache_dir = pathlib.Path(cache_dir)
+    cache_dir.mkdir(exist_ok=True)
+
+    HTTPCACHE_DIR = str(cache_dir)
+    HTTPCACHE_ENABLED = True
 
 RETRY_TIMES = 5
 RETRY_PRIORITY_ADJUST = -5
@@ -41,9 +50,7 @@ CLOSESPIDER_ITEMCOUNT = 2 * MAX_ITEMS
 CLOSESPIDER_TIMEOUT_NO_ITEM = 60
 
 ITEM_PIPELINES = {
-    "feeder.pipelines.FeederDefaultsPipeline": 100,
-    "feeder.pipelines.FeederFilterPipeline": 101,
-    "feeder.pipelines.FeederMetadataPipeline": 102,
+    "aaron.pipelines.Pipeline": 100,
 }
 
 # Set settings whose default value is deprecated to a future-proof value
@@ -52,7 +59,7 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 FEED_EXPORTERS = {
-    "atom": "feeder.exporters.FeederAtomExporter",
+    "atom": "aaron.exporters.AtomExporter",
 }
 
 DOWNLOADER_MIDDLEWARES = {

@@ -39,7 +39,7 @@
       <link href="{{ item.url }}" />
       <updated>{{ item.updated.isoformat() }}</updated>
       <published>{{ item.published.isoformat() }}</published>
-      <content type="html">{{ item.content }}</content>
+      <content type="html">{{ item.text }}</content>
 
       {% if item.summary %}
         <summary>{{ item.summary }}</summary>

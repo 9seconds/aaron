@@ -25,7 +25,7 @@ RUN tar xf 1.2.tar.gz \
   && mv ./runit-docker.so /runit-docker.so
 
 COPY pyproject.toml poetry.lock README.md /project/
-COPY feeder /project/feeder
+COPY aaron /project/aaron
 WORKDIR /project/
 
 RUN poetry bundle venv \
@@ -41,8 +41,10 @@ FROM python:3-slim AS app
 HEALTHCHECK CMD command do healthcheck
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/app/bin
-ENV PASSWORD ""
-ENV FEEDS_DIR /feeds
+ENV AARON_PASSWORD ""
+ENV AARON_FEEDS_DIR /feeds
+ENV AARON_CACHE_DIR /root/.cache/aaron
+ENV AARON_LOG_DIR /var/log/aaron
 
 EXPOSE 80
 
@@ -53,7 +55,7 @@ RUN apt-get update \
     nginx \
     runit \
     zopfli \
-  && mkdir $FEEDS_DIR /var/log/feeder \
+  && mkdir "$AARON_FEEDS_DIR" "$AARON_LOG_DIR" \
   && apt-get autoremove --yes --purge \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*

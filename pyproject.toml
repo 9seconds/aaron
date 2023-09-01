@@ -1,19 +1,19 @@
 [tool.poetry]
-name = "feeder"
+name = "aaron"
 version = "0.0.1"
 description = "Make RSS great again"
 authors = ["9seconds <nineseconds@yandex.ru>"]
 license = "MIT"
 readme = "README.md"
 packages = [
-  { include = "feeder" }
+  { include = "aaron" }
 ]
 include = [
-  { path = "feeder/templates/*" }
+  { path = "aaron/templates/*" }
 ]
 
 [tool.poetry.scripts]
-do = "feeder.bin.do:main"
+do = "aaron.bin.do:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"

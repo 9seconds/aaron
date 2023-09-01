@@ -1,0 +1,6 @@
+<p><strong>{{ score }}</strong> by <a href="{{ author.url }}">{{ author.name }}</a></p>
+<p><img src="{{ img.url }}" alt="{{ img.title }}" title="{{ img.title }}" /></p>
+
+{% for p in paragraphs %}
+  <p>{{ p }}</p>
+{% endfor %}

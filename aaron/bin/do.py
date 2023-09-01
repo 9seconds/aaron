@@ -12,12 +12,11 @@ import urllib.request
 import humanize
 import tzlocal
 
-import feeder
-import feeder.bin
+import aaron
 
 
 def main():
-    if not os.getenv("BASE_URL"):
+    if not os.getenv("AARON_BASE_URL"):
         sys.exit("Base URL is not defined")
 
     def type_url(value):
@@ -48,7 +47,7 @@ def main():
             "-b",
             "--base-url",
             type=type_url,
-            default=os.getenv("BASE_URL", ""),
+            default=os.getenv("AARON_BASE_URL", ""),
             help="Base URL for the HTTP endpoint",
         )
 
@@ -57,7 +56,7 @@ def main():
             "-p",
             "--password",
             type=type_password,
-            default=os.getenv("PASSWORD", ""),
+            default=os.getenv("AARON_PASSWORD", ""),
             help="Access password",
         )
 
@@ -66,12 +65,12 @@ def main():
             "-o",
             "--output-dir",
             type=type_dir,
-            default=os.getenv("FEEDS_DIR", "/feeds"),
+            default=os.getenv("AARON_FEEDS_DIR", "/feeds"),
             help="Directory to store output files",
         )
 
     parser = argparse.ArgumentParser(
-        description="Do various things with feeder",
+        description="Do various things with aaron",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     subcommands = parser.add_subparsers(required=True)
@@ -91,7 +90,7 @@ def main():
 
     sub_healthcheck = subcommands.add_parser(
         "healthcheck",
-        help="Verify feeder health",
+        help="Verify aaron health",
     )
     add_base_url(sub_healthcheck)
     add_password(sub_healthcheck)
@@ -144,8 +143,8 @@ def do_generate(options):
 def do_generate_opml(options):
     items = []
 
-    process = feeder.bin.get_crawler_process()
-    for name in feeder.bin.list_spiders():
+    process = aaron.get_crawler_process()
+    for name in process.spider_loader.list_spiders():
         crawler = process.create_crawler(name)
         items.append(
             {
@@ -157,11 +156,11 @@ def do_generate_opml(options):
             }
         )
 
-    print(feeder.render_opml(items))
+    print(aaron.render_opml(items))
 
 
 def do_generate_nginx(options):
-    print(feeder.render_nginx(re.escape(options.password), options.output_dir))
+    print(aaron.render_nginx(re.escape(options.password), options.output_dir))
 
 
 def do_generate_url(options):
@@ -172,7 +171,7 @@ def do_healthcheck(options):
     url = urllib.parse.urljoin("http://127.0.0.1:80", options.password + "/")
 
     request = urllib.request.Request(url)
-    request.add_header("User-Agent", "feeder-healthcheck")
+    request.add_header("User-Agent", "aaron-healthcheck")
 
     try:
         with urllib.request.urlopen(request, timeout=1) as response:
@@ -205,9 +204,9 @@ def do_last_updated(options):
 
 
 def do_list_spiders(_):
-    for name in feeder.bin.list_spiders():
+    for name in aaron.list_spiders():
         print(name)
 
 
 def do_run(options):
-    return feeder.bin.run_crawl(options.spider, options.output_dir)
+    return aaron.run_crawl(options.spider, options.output_dir)
