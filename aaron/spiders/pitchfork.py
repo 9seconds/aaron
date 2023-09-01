@@ -25,7 +25,7 @@ class RssSpider(aaron.Spider):
                 f"Cannot get JSON data for {response.url}",
                 level=logging.WARNING,
             )
-            return
+            return None
 
         try:
             data = json.loads(json_data)
@@ -34,7 +34,7 @@ class RssSpider(aaron.Spider):
                 f"Cannot extract JSON data for {response.url}: {exc}",
                 level=logging.WARNING,
             )
-            return
+            return None
 
         score = response.xpath(
             "//div[contains(@class,'ScoreCircle')]"
@@ -49,7 +49,7 @@ class RssSpider(aaron.Spider):
                 f"Cannot find out a correct score value for {score}",
                 level=logging.WARNING,
             )
-            return
+            return None
 
         loader = aaron.items.ItemLoader(response=response)
 

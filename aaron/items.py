@@ -17,7 +17,7 @@ def parse_timestamp(value, loader_context):
 
     tstamp = dateparser.parse(value, **dateparser_config)
     if not tstamp.tzinfo:
-        tstamp = tstamp.astimezone(tzlocal.get_localzone())
+        return tstamp.astimezone(tzlocal.get_localzone())
 
     return tstamp
 
@@ -26,9 +26,8 @@ def process_url(value, loader_context):
     value = value or ""
     value = w3lib.html.strip_html5_whitespace(value)
     value = loader_context["response"].urljoin(value)
-    value = w3lib.url.canonicalize_url(value)
 
-    return value
+    return w3lib.url.canonicalize_url(value)
 
 
 class Metadata(scrapy.Item):

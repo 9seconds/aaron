@@ -55,8 +55,8 @@ class Pipeline:
             raise scrapy.exceptions.DropItem(
                 f"Item with ID {_id} was seen before"
             )
-        else:
-            self.seen_ids.add(_id)
+
+        self.seen_ids.add(item["item_id"])
 
     def attach_metadata(self, item, settings):
         item["metadata"] = aaron.items.Metadata(

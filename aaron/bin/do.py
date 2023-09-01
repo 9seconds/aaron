@@ -133,8 +133,8 @@ def do_generate(options):
             return do_generate_nginx(options)
         case "url":
             return do_generate_url(options)
-        case _:
-            raise ValueError(f"Unknown template {options.template}")
+
+    raise ValueError(f"Unknown template {options.template}")
 
 
 def do_generate_opml(options):

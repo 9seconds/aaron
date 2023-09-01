@@ -117,9 +117,7 @@ def get_crawler(name, process, settings=None):
     all_settings = copy.deepcopy(process.settings)
     all_settings.setdict(settings or {}, priority="cmdline")
 
-    crawler = scrapy.crawler.Crawler(spider_cls, all_settings)
-
-    return crawler
+    return scrapy.crawler.Crawler(spider_cls, all_settings)
 
 
 scrapy.utils.log.configure_logging(SCRAPY_SETTINGS)

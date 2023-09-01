@@ -63,7 +63,7 @@ class Cynicmansion(aaron.Spider):
             ).extract()
         ]
         if not images:
-            return
+            return None
 
         loader.add_value(
             "text",
