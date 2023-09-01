@@ -777,6 +777,20 @@ files = [
 flake8 = "*"
 
 [[package]]
+name = "flake8-use-pathlib"
+version = "0.3.0"
+description = "A plugin for flake8 finding use of functions that can be replaced by pathlib module."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "flake8-use-pathlib-0.3.0.tar.gz", hash = "sha256:0ef19f255a51601bcf04ff54f25ef8a466dff68210cd95b4f1db36a78ace5223"},
+    {file = "flake8_use_pathlib-0.3.0-py3-none-any.whl", hash = "sha256:c7b6d71575b575f7d70ebf3f1d7f2dd6685e401d3280208f1db9dbb6bfa32608"},
+]
+
+[package.dependencies]
+flake8 = ">=3.6"
+
+[[package]]
 name = "flake8-useless-assert"
 version = "0.4.4"
 description = "flake8 plugin to catch useless `assert` statements"
@@ -1867,4 +1881,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "173abb99dcb060d352c5eed3c941ac8afb2adbbc4e004a335e9c9179ac4968b7"
+content-hash = "b219125eee66e6895aad6a5583c30345598a757a4b401e50d86f8a6c44ecce82"
