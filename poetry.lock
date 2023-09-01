@@ -679,23 +679,6 @@ files = [
 flake8 = ">3.0.0"
 
 [[package]]
-name = "flake8-pep3101"
-version = "2.0.0"
-description = "Checks for old string formatting."
-optional = false
-python-versions = "*"
-files = [
-    {file = "flake8-pep3101-2.0.0.tar.gz", hash = "sha256:ae2ee1758734a473ca971b4bf9ff09c961b6099916db91fdb6b9718328dfcacb"},
-    {file = "flake8_pep3101-2.0.0-py3-none-any.whl", hash = "sha256:1d818e1f53c6d26e875714f2f041ec15fbb23c17e2268dbbb024e9c3383541cd"},
-]
-
-[package.dependencies]
-flake8 = "*"
-
-[package.extras]
-test = ["pytest"]
-
-[[package]]
 name = "flake8-picky-parentheses"
 version = "0.5.0"
 description = "flake8 plugin to nitpick about parenthesis, brackets, and braces"
@@ -718,6 +701,20 @@ files = [
     {file = "flake8-plugin-utils-1.3.3.tar.gz", hash = "sha256:39f6f338d038b301c6fd344b06f2e81e382b68fa03c0560dff0d9b1791a11a2c"},
     {file = "flake8_plugin_utils-1.3.3-py3-none-any.whl", hash = "sha256:e4848c57d9d50f19100c2d75fa794b72df068666a9041b4b0409be923356a3ed"},
 ]
+
+[[package]]
+name = "flake8-printf-formatting"
+version = "1.1.2"
+description = "flake8 plugin which forbids printf-style string formatting"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "flake8-printf-formatting-1.1.2.tar.gz", hash = "sha256:0f9e1308ac290356e4b271d4f26adfc3f9165680a7b6c221503b0f3e155a2784"},
+    {file = "flake8_printf_formatting-1.1.2-py2.py3-none-any.whl", hash = "sha256:d908ffabdf08581043a50572744fd60563d82386630b0335445894120089d2df"},
+]
+
+[package.dependencies]
+flake8 = "*"
 
 [[package]]
 name = "flake8-return"
@@ -1870,4 +1867,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "d393f375cc00c46545d81298b5df02df3d3aa2eac19fdf88adf1b0814b12403b"
+content-hash = "173abb99dcb060d352c5eed3c941ac8afb2adbbc4e004a335e9c9179ac4968b7"
