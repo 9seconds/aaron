@@ -54,6 +54,7 @@ flake8-newspaper-style = "^0.4.3"
 flake8-picky-parentheses = "^0.5.0"
 flake8-return = "^1.2.0"
 flake8-broken-line = "^1.0.0"
+flake8-debugger = "^4.1.2"
 
 [build-system]
 requires = ["poetry-core"]

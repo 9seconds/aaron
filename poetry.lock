@@ -579,6 +579,21 @@ files = [
 flake8 = ">=3.0.0"
 
 [[package]]
+name = "flake8-debugger"
+version = "4.1.2"
+description = "ipdb/pdb statement checker plugin for flake8"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "flake8-debugger-4.1.2.tar.gz", hash = "sha256:52b002560941e36d9bf806fca2523dc7fb8560a295d5f1a6e15ac2ded7a73840"},
+    {file = "flake8_debugger-4.1.2-py3-none-any.whl", hash = "sha256:0a5e55aeddcc81da631ad9c8c366e7318998f83ff00985a49e6b3ecf61e571bf"},
+]
+
+[package.dependencies]
+flake8 = ">=3.0"
+pycodestyle = "*"
+
+[[package]]
 name = "flake8-implicit-str-concat"
 version = "0.4.0"
 description = "Flake8 plugin to encourage correct string literal concatenation."
@@ -1824,4 +1839,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "363c5b9b55fdd0580ae9ae7b966bca97427374b6293599cc6aa882ff21da8486"
+content-hash = "e7644490b2cfcf112abd65fe8cb676342dbb636dd8551c67c50235b5a2250eb7"
