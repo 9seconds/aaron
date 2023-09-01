@@ -462,6 +462,20 @@ files = [
 flake8 = ">=5"
 
 [[package]]
+name = "flake8-all-not-strings"
+version = "0.0.0"
+description = "flake8 plugin which checks that modules under `__all__` are defined as strings"
+optional = false
+python-versions = "*"
+files = [
+    {file = "flake8_all_not_strings-0.0.0-py2.py3-none-any.whl", hash = "sha256:243e548bc9042ed4240f95f422965ca92fde895cf3f449e373eeb628f379b0f2"},
+    {file = "flake8_all_not_strings-0.0.0.tar.gz", hash = "sha256:6f63a2d9f1a8c5fa0fdcf3652b1ede2cae2b201a0e574c1fc8f276005fe0ba63"},
+]
+
+[package.dependencies]
+flake8 = ">=3"
+
+[[package]]
 name = "flake8-bugbear"
 version = "23.7.10"
 description = "A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle."
@@ -1616,4 +1630,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "58b96a9b893df4b305b9995994c1421e70b7f2c128af231fc664ae2a785b399a"
+content-hash = "11c763cff8dee94cfedd76a40324acb1ac8ed329ae619ed5bfdfbbeb1ce0f9b8"
