@@ -46,6 +46,7 @@ flake8-clean-block = "^0.1.2"
 flake8-comprehensions = "^3.14.0"
 flake8-datetimez = "^20.10.0"
 flake8-datetime-utcnow-plugin = "^0.1.2"
+flake8-implicit-str-concat = "^0.4.0"
 
 [build-system]
 requires = ["poetry-core"]

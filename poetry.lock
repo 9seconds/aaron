@@ -565,6 +565,17 @@ files = [
 flake8 = ">=3.0.0"
 
 [[package]]
+name = "flake8-implicit-str-concat"
+version = "0.4.0"
+description = "Flake8 plugin to encourage correct string literal concatenation."
+optional = false
+python-versions = "~=3.7"
+files = [
+    {file = "flake8_implicit_str_concat-0.4.0-py3-none-any.whl", hash = "sha256:b91805a3e0ff30ae2890830548478af25c79a4a579ec402a6ba3538043dff60c"},
+    {file = "flake8_implicit_str_concat-0.4.0.tar.gz", hash = "sha256:b6acf233afee943dc1802ef4bc242a19f0419fac9943739e235d3f2aaf616361"},
+]
+
+[[package]]
 name = "flake8-secure-coding-standard"
 version = "1.4.0"
 description = "Flake8 plugin adding some checks to make Python code adhere to more secure coding standard"
@@ -1701,4 +1712,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "f18d6795de2f7f73d260e41ad8aec1cf8740e382f7f6e0cea1a48ff897b070bd"
+content-hash = "b86779a422e9c853b3215697ee5578956e1ecfb13dbf7a64e0259b0eca693dd5"
