@@ -523,6 +523,20 @@ files = [
 flake8 = ">=4"
 
 [[package]]
+name = "flake8-comprehensions"
+version = "3.14.0"
+description = "A flake8 plugin to help you write better list/set/dict comprehensions."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "flake8_comprehensions-3.14.0-py3-none-any.whl", hash = "sha256:7b9d07d94aa88e62099a6d1931ddf16c344d4157deedf90fe0d8ee2846f30e97"},
+    {file = "flake8_comprehensions-3.14.0.tar.gz", hash = "sha256:81768c61bfc064e1a06222df08a2580d97de10cb388694becaf987c331c6c0cf"},
+]
+
+[package.dependencies]
+flake8 = ">=3.0,<3.2.0 || >3.2.0"
+
+[[package]]
 name = "flake8-secure-coding-standard"
 version = "1.4.0"
 description = "Flake8 plugin adding some checks to make Python code adhere to more secure coding standard"
@@ -1659,4 +1673,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "769bfac27da4fd5b1ea2aa31b32c751babc31e4b6545d112733e8fbcdc65b3b0"
+content-hash = "e87730b006377114b2bd9a83a9a76236bdd24a3ec4d9d64f4e332a83c6bb0035"
