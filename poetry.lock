@@ -475,6 +475,19 @@ files = [
 flake8 = ">=5"
 
 [[package]]
+name = "flake8-absolute-import"
+version = "1.0.0.1"
+description = "flake8 plugin to require absolute imports"
+optional = false
+python-versions = ">=3.4"
+files = [
+    {file = "flake8_absolute_import-1.0.0.1-py3-none-any.whl", hash = "sha256:d24f189bca52ffc0d13e8046606ea42d22a9ad9d409bf39e52b93493cf2ffd2c"},
+]
+
+[package.dependencies]
+flake8 = ">=3.7"
+
+[[package]]
 name = "flake8-all-not-strings"
 version = "0.0.0"
 description = "flake8 plugin which checks that modules under `__all__` are defined as strings"
@@ -1979,4 +1992,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b7f2c9256238d5244503ea223a68e8482fa398bcd91464a829a4e1d8bd7057da"
+content-hash = "cdeb5845d056493d2af01f04814123618e83664b6bd4b0ea4dac302fa49e0640"

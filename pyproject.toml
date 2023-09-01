@@ -74,6 +74,7 @@ flake8-functions-names = "^0.4.0"
 flake8-variables-names = "^0.0.6"
 flake8-cognitive-complexity = "^0.1.0"
 flake8-pyproject = "^1.2.3"
+flake8-absolute-import = "^1.0.0.1"
 
 [build-system]
 requires = ["poetry-core"]
