@@ -31,7 +31,7 @@ def process_url(value, loader_context):
 
 
 class Metadata(scrapy.Item):
-    id = scrapy.Field()
+    item_id = scrapy.Field()
     title = scrapy.Field()
     author_name = scrapy.Field()
     author_email = scrapy.Field()
