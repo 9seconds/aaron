@@ -10,7 +10,11 @@ JinjaEnvironment = jinja2.Environment(
 
 
 def render_template(spider, **ctx):
-    return JinjaEnvironment.get_template(f"{spider.name}.html.j2").render(ctx)
+    template_name = spider
+    if not isinstance(spider, str):
+        template_name = spider.name
+
+    return JinjaEnvironment.get_template(f"{template_name}.html.j2").render(ctx)
 
 
 def render_feed(items):
