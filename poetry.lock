@@ -537,6 +537,20 @@ files = [
 flake8 = ">=3.0,<3.2.0 || >3.2.0"
 
 [[package]]
+name = "flake8-datetime-utcnow-plugin"
+version = "0.1.2"
+description = "Plugin to check that utcnow() is not used in favour of now(UTC)"
+optional = false
+python-versions = ">=3.7,<4"
+files = [
+    {file = "flake8-datetime-utcnow-plugin-0.1.2.tar.gz", hash = "sha256:724733581a7b4e08a089a738ee69f4ef0fa7450a6ba0e2d01e3367fcfa6b8a82"},
+    {file = "flake8_datetime_utcnow_plugin-0.1.2-py3-none-any.whl", hash = "sha256:91b60598643ec2d616949d60913a273b1e963b9eeaf46579bee442a2539640be"},
+]
+
+[package.dependencies]
+flake8 = ">=3.0.0"
+
+[[package]]
 name = "flake8-datetimez"
 version = "20.10.0"
 description = "A plugin for flake8 to ban the usage of unsafe naive datetime class."
@@ -1687,4 +1701,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "86cb5fc7c54e5f49945bd997f6ed1ff5ea48e455e4b6ef50be1dfe60067efa9d"
+content-hash = "f18d6795de2f7f73d260e41ad8aec1cf8740e382f7f6e0cea1a48ff897b070bd"
